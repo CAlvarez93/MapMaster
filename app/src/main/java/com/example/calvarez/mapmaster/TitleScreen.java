@@ -3,6 +3,8 @@ package com.example.calvarez.mapmaster;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,14 @@ public class TitleScreen extends Fragment {
         View v = inflater.inflate(R.layout.title_page,container,false);
 
         Toast.makeText(mActivity, "Created!", Toast.LENGTH_SHORT).show();
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.toggleScreens(R.layout.game_setup);
+            }
+        });
 
         return v;
 //        return super.onCreateView(inflater, container, savedInstanceState);

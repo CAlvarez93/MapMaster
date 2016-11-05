@@ -17,9 +17,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     TitleScreen mTitleScreen;
+    GameSetup mGameSetup;
+    MainGame mMainGame;
+    FeedbackPage mFeedbackPage;
+    ResultsPage mResultPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +32,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,18 +43,77 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         mTitleScreen = null;
+        mGameSetup = null;
+        mMainGame = null;
+        mFeedbackPage = null;
+        mResultPage = null;
 
         try {
             mTitleScreen = (TitleScreen.class).newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, "FAILURE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "FAILURE - TitlePage", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            mGameSetup = (GameSetup.class).newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, "FAILURE - GameSetup", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            mMainGame = (MainGame.class).newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, "FAILURE - MainGame", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            mFeedbackPage = (FeedbackPage.class).newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, "FAILURE - FeedbackPage", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            mResultPage = (ResultsPage.class).newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, "FAILURE - ResultPage", Toast.LENGTH_SHORT).show();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.flContent,mTitleScreen);
         fragmentTransaction.commit();
+    }
+
+    public void toggleScreens(int layout){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        switch (layout){
+            case R.layout.title_page:
+                fragmentTransaction.replace(R.id.flContent,mTitleScreen);
+                fragmentTransaction.commit();
+                break;
+            case R.layout.game_setup:
+                fragmentTransaction.replace(R.id.flContent,mGameSetup);
+                fragmentTransaction.commit();
+                break;
+            case R.layout.main_game:
+                fragmentTransaction.replace(R.id.flContent,mMainGame);
+                fragmentTransaction.commit();
+                break;
+            case R.layout.feedback_page:
+                fragmentTransaction.replace(R.id.flContent,mFeedbackPage);
+                fragmentTransaction.commit();
+                break;
+            case R.layout.results_page:
+                fragmentTransaction.replace(R.id.flContent,mResultPage);
+                fragmentTransaction.commit();
+                break;
+        }
     }
 
     @Override
