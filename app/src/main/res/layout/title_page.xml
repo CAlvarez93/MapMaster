@@ -5,6 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.calvarez.mapmaster.TitleScreen">
 
+
+    <com.example.calvarez.mapmaster.TitleScreen.GIFView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/gifTest"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
