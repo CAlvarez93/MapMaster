@@ -1,6 +1,7 @@
 package com.example.calvarez.mapmaster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
  */
 public class MainGame extends Fragment {
 
+    int count = 0;
+
     MainActivity mActivity;
 
     @Nullable
@@ -25,12 +28,20 @@ public class MainGame extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.toggleScreens(R.layout.feedback_page);
+                mActivity.toggleScreens(R.layout.game_setup);
             }
         });
 
+        if(count == 0){
+            StreetView();
+            count = 1;
+        }else{
+            count = 0;
+        }
+
         return v;
     }
+
 
     @Override
     public void onDestroy() {
@@ -41,5 +52,13 @@ public class MainGame extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
+
     }
+
+
+    void StreetView() {
+        Intent intent = new Intent (mActivity, StreetViewActivity.class);
+        startActivity(intent);
+    }
+
 }

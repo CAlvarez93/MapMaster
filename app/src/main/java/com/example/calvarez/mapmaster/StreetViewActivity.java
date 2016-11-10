@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class StreetViewActivity extends FragmentActivity implements OnStreetViewPanoramaReadyCallback {
 
+    int count = 0;
+    MainActivity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,22 +29,17 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
 
     @Override
     public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-        //Button back = (Button) findViewById(R.id.back_button);
 
         panorama.setPosition(new LatLng(42.016249,-93.636185));
         StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
         StreetViewPanoramaFragment.newInstance(options);
 
-        //          back.setOnClickListener(new View.OnClickListener() {
-        //              @Override
-        //               public void onClick(View view) {
-        //                  StreetView2();
-        //               }
-       //          });
+
+
     }
 
     void StreetView2() {
-        Intent intent2 = new Intent (this, MapActivity.class);
+        Intent intent2 = new Intent (mActivity, MainGame.class);
         startActivity(intent2);
     }
 
