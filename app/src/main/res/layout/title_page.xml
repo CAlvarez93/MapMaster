@@ -1,22 +1,23 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.calvarez.mapmaster.TitleScreen">
 
 
     <com.example.calvarez.mapmaster.GIFView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
+
+        android:layout_width="427px"
+        android:layout_height="240px"
+        android:layout_centerInParent="true"
         android:id="@+id/gifTest"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title Screen!"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:textSize="30dp" />
 
     <android.support.design.widget.FloatingActionButton
@@ -31,4 +32,4 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="right|bottom" />
 
-</FrameLayout>
+</RelativeLayout>
