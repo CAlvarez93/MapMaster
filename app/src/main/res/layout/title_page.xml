@@ -6,12 +6,17 @@
     tools:context="com.example.calvarez.mapmaster.TitleScreen">
 
 
-    <com.example.calvarez.mapmaster.GIFView
+    <!--<com.example.calvarez.mapmaster.GIFView-->
 
-        android:layout_width="427px"
-        android:layout_height="240px"
-        android:layout_centerInParent="true"
-        android:id="@+id/gifTest"/>
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:id="@+id/gifTest"/>-->
+
+    <VideoView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/video"/>
 
     <TextView
         android:layout_width="wrap_content"
