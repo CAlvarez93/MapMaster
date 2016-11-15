@@ -35,8 +35,6 @@ public class MainGame extends Fragment {
         if(count == 0){
             StreetView();
             count = 1;
-        }else{
-            count = 0;
         }
 
         return v;

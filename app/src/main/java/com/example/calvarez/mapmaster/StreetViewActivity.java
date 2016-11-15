@@ -5,7 +5,12 @@ package com.example.calvarez.mapmaster;
  */
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
@@ -18,14 +23,6 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     int count = 0;
     MainActivity mActivity;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_game);
-        // TODO Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        StreetViewPanoramaFragment streetViewPanoramaFragment = (StreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.streetviewpanorama);
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
-    }
 
     @Override
     public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
@@ -34,13 +31,30 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
         StreetViewPanoramaFragment.newInstance(options);
 
-
-
     }
 
     void StreetView2() {
-        Intent intent2 = new Intent (mActivity, MainGame.class);
+        Intent intent2 = new Intent (mActivity, MapActivity.class);
         startActivity(intent2);
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_game);
+        // TODO Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        StreetViewPanoramaFragment streetViewPanoramaFragment = (StreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.streetviewpanorama);
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StreetView2();
+            }
+        });
+    }
+
 
 }

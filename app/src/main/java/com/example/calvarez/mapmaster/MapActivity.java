@@ -47,12 +47,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
         // Add a marker in your hometown
-        final LatLng SpiritLake = new LatLng(43.4,-95.1);
-        Marker sl = mMap.addMarker(new MarkerOptions().position(SpiritLake).title("Spirit Lake, IA"));
-        CameraPosition SL = CameraPosition.fromLatLngZoom(SpiritLake, 5.0f);
+        final LatLng ams = new LatLng(42.016249,-93.636185);
+        Marker Ames = mMap.addMarker(new MarkerOptions().position(ams).title("Spirit Lake, IA"));
+        CameraPosition AI = CameraPosition.fromLatLngZoom(ams, 5.0f);
 
         // Move camera to marker position
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(SL));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AI));
 
         // Change the initial states of the Map.
         GoogleMapOptions options = new GoogleMapOptions();
