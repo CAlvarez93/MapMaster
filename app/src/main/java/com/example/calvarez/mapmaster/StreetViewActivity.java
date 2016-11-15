@@ -33,10 +33,6 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
 
     }
 
-    void StreetView2() {
-        Intent intent2 = new Intent (mActivity, MapActivity.class);
-        startActivity(intent2);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishActivity(0);
+                finishActivity(200);
             }
         });
     }

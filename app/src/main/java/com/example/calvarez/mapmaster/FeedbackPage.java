@@ -1,6 +1,7 @@
 package com.example.calvarez.mapmaster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +30,8 @@ public class FeedbackPage extends Fragment {
             }
         });
 
+        MapView();  // starts the mapview activity
+
         return v;
     }
 
@@ -41,5 +44,10 @@ public class FeedbackPage extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
+    }
+
+    void MapView() {
+        Intent intent2 = new Intent (mActivity, MapActivity.class); // starts map view activity
+        startActivityForResult(intent2, 0);
     }
 }

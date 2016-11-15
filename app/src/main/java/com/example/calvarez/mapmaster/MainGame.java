@@ -32,11 +32,8 @@ public class MainGame extends Fragment {
             }
         });
 
-        if(count == 0){
-            StreetView(); // starts the streetview activity
-            count = 1;
-            MapView();  // starts the mapview activity
-        }
+        StreetView(); // starts the streetview activity
+
 
         return v;
     }
@@ -54,14 +51,11 @@ public class MainGame extends Fragment {
 
     }
 
-
     void StreetView() {
         Intent intent = new Intent (mActivity, StreetViewActivity.class); // starts streetview activity
-        startActivityForResult(intent, 0);
+        startActivityForResult(intent, 200);
+
     }
 
-    void MapView() {
-        Intent intent2 = new Intent (mActivity, MapActivity.class); // starts map view activity
-        startActivityForResult(intent2, 0);
-    }
+
 }

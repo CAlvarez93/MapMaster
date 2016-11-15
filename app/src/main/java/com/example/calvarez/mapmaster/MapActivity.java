@@ -2,7 +2,9 @@ package com.example.calvarez.mapmaster;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,6 +32,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // TODO Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishActivity(200);
+            }
+        });
     }
 
 
@@ -65,6 +75,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .tiltGesturesEnabled(false);
 
     }
+
+
 
 
 }
