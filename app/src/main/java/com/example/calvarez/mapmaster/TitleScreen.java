@@ -17,8 +17,8 @@ import android.widget.VideoView;
  * Created by calvarez on 11/5/2016.
  */
 public class TitleScreen extends Fragment {
-    MainActivity mActivity;
-    GIFView gifView;
+    private MainActivity mActivity;
+    private VideoView videoview;
 
     @Nullable
     @Override
@@ -36,12 +36,18 @@ public class TitleScreen extends Fragment {
         });
 
 
-        final VideoView videoview = (VideoView) v.findViewById(R.id.video);
+        videoview = (VideoView) v.findViewById(R.id.video);
         Uri uri = Uri.parse("android.resource://"+mActivity.getPackageName()+"/"+R.raw.map_master);
-        videoview.setVideoURI(uri); videoview.start();
+        videoview.setVideoURI(uri);
         videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                videoview.start();
+            }
+        });
+        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
                 videoview.start();
             }
         });
@@ -51,8 +57,15 @@ public class TitleScreen extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        videoview.stopPlayback();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+
     }
 
     @Override
