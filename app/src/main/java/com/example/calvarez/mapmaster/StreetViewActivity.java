@@ -51,7 +51,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StreetView2();
+                finishActivity(0);
             }
         });
     }

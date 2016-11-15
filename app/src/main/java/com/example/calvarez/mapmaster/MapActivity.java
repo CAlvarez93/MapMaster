@@ -67,11 +67,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    // set an onClick listener to send to a new place
-
-    void StreetView(LatLng place) {
-        Intent intent = new Intent (this, StreetViewActivity.class);
-        startActivity(intent);
-    }
-
 }
