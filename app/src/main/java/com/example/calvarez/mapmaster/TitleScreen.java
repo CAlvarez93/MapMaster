@@ -25,8 +25,6 @@ public class TitleScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.title_page,container,false);
 
-        Toast.makeText(mActivity, "Created!", Toast.LENGTH_SHORT).show();
-
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
