@@ -1,12 +1,9 @@
 package com.example.calvarez.mapmaster;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +21,8 @@ public class MainActivity extends AppCompatActivity
     MainGame mMainGame;
     FeedbackPage mFeedbackPage;
     ResultsPage mResultPage;
+
+    boolean switch_widget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +113,17 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 break;
         }
+    }
+
+    public void setSwitch(boolean isChecked){
+        switch_widget = isChecked;
+    }
+
+    public boolean isGameTimed(){
+        if(switch_widget){
+            return true;
+        }
+        return false;
     }
 
     @Override
