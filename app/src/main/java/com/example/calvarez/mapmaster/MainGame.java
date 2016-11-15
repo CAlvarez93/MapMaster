@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,28 +17,32 @@ import android.view.ViewGroup;
 public class MainGame extends Fragment {
 
     int count = 0;
-
     MainActivity mActivity;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+            StreetView(); // starts the streetview activity
+
         View v = inflater.inflate(R.layout.main_game,container,false);
+
+        Log.i("After click?", "Before Click");
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.toggleScreens(R.layout.game_setup);
+
+                Log.i("After click?", "Click");
+
+                mActivity.toggleScreens(R.layout.feedback_page);
             }
         });
-
-        StreetView(); // starts the streetview activity
 
 
         return v;
     }
-
 
     @Override
     public void onDestroy() {

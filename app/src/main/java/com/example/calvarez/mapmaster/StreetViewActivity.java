@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,6 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     MainActivity mActivity;
 
 
-    @Override
-    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-
-        panorama.setPosition(new LatLng(42.016249,-93.636185));
-        StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
-        StreetViewPanoramaFragment.newInstance(options);
-
-    }
 
 
     @Override
@@ -47,9 +40,26 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishActivity(200);
+                Log.i("tracker tracking thing", "After Streetview");
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("extras", 200);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+                Log.i("tracker tracking thing", "After Streetview");
             }
         });
+        Log.i("tracker tracking thing", "After Streetview");
+    }
+
+
+
+    @Override
+    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
+
+        panorama.setPosition(new LatLng(42.016249,-93.636185));
+        StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
+        StreetViewPanoramaFragment.newInstance(options);
+
     }
 
 
