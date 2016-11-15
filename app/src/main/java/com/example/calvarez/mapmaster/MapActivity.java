@@ -38,7 +38,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent i = new Intent(MapActivity.this, StreetViewActivity.class);
+                MapActivity.this.startActivity(i);
             }
         });
 

@@ -22,12 +22,8 @@ public class MainGame extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-            StreetView(); // starts the streetview activity
-
-        View v = inflater.inflate(R.layout.main_game,container,false);
-
         Log.i("After click?", "Before Click");
+        View v = inflater.inflate(R.layout.main_game,container,false);
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +36,7 @@ public class MainGame extends Fragment {
             }
         });
 
-
+        StreetView(); // starts the streetview activity
         return v;
     }
 

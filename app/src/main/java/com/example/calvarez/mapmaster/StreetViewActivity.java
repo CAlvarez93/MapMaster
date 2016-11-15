@@ -3,6 +3,9 @@ package com.example.calvarez.mapmaster;
 /**
  * Created by Adam Dau on 11/10/2016.
  */
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
@@ -23,6 +30,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
 
     int count = 0;
     MainActivity mActivity;
+    final Context context = this;
 
 
 
@@ -37,18 +45,38 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("tracker tracking thing", "After Streetview");
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("extras", 200);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-                Log.i("tracker tracking thing", "After Streetview");
+
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.popup);
+                dialog.setTitle("Title...");
+
+                Button button = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                RadioButton r1 = (RadioButton) findViewById(R.id.radio1);
+                RadioButton r2 = (RadioButton) findViewById(R.id.radio2);
+                RadioButton r3 = (RadioButton) findViewById(R.id.radio3);
+                RadioButton r4 = (RadioButton) findViewById(R.id.radio4);
+                // if button is clicked, go to main game
+                dialog.show();
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+
+                        Intent i = new Intent(StreetViewActivity.this, MapActivity.class);
+                        StreetViewActivity.this.startActivity(i);
+                    }
+                });
             }
         });
-        Log.i("tracker tracking thing", "After Streetview");
+
+
+
+
     }
 
 
