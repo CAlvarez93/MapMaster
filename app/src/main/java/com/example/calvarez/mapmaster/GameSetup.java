@@ -3,6 +3,7 @@ package com.example.calvarez.mapmaster;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class GameSetup extends Fragment {
         final Dialog dialog = new Dialog(mActivity);
         dialog.setContentView(R.layout.tutorial_popup);
         dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         FloatingActionButton info = (FloatingActionButton) v.findViewById(R.id.info);
         info.setOnClickListener(new View.OnClickListener() {

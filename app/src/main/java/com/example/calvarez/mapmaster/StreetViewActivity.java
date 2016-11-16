@@ -5,20 +5,17 @@ package com.example.calvarez.mapmaster;
  */
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
@@ -26,8 +23,6 @@ import com.google.android.gms.maps.StreetViewPanoramaFragment;
 import com.google.android.gms.maps.StreetViewPanoramaOptions;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class StreetViewActivity extends FragmentActivity implements OnStreetViewPanoramaReadyCallback {
@@ -68,7 +63,8 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
                 // custom dialog
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.popup);
-
+                Window window = dialog.getWindow();
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 Button button = (Button) dialog.findViewById(R.id.dialogButtonOK);
                 RadioButton r1 = (RadioButton) findViewById(R.id.radio1);

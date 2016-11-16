@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_box">
 
 
     <LinearLayout
@@ -10,12 +11,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:padding="10dp">
         <TextView
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/intro_tutorial" />
+            android:text="@string/intro_tutorial"
+            android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,10 +29,13 @@
             android:text="@string/first_para"/>
 
         <TextView
+            android:paddingTop="30dp"
+            android:paddingBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/how_play" />
+            android:text="@string/how_play"
+            android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,10 +44,12 @@
             android:text="@string/second_para"/>
 
         <TextView
+            android:paddingTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/end_tutorial" />
+            android:text="@string/end_tutorial"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </RelativeLayout>
