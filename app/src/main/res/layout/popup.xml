@@ -23,7 +23,7 @@
                 android:id="@+id/radio1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chicago"
+                android:text="@string/Button1"
                 android:checked="false" />
             <RadioButton
                 android:layout_margin="10dp"
@@ -31,21 +31,21 @@
                 android:id="@+id/radio2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ames" />
+                android:text="@string/Button2" />
             <RadioButton
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:id="@+id/radio3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nyc" />
+                android:text="@string/Button3" />
             <RadioButton
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:id="@+id/radio4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dsm" />
+                android:text="@string/Button4" />
 
             <Button
                 android:layout_marginTop="30dp"

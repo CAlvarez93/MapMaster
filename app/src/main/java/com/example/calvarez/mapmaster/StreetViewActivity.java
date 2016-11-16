@@ -33,15 +33,13 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     final LatLng ames = new LatLng(42.016249,-93.636185);
     final LatLng chicago = new LatLng(41.8781,-87.6298);
     final LatLng nyc = new LatLng(40.6892,-74.0445);
-    final LatLng dsm = new LatLng(41.6005,-93.6091);
+    final LatLng dsm = new LatLng(41.587584,-93.616643);
     final LatLng london = new LatLng(51.5007,-0.1246);
     final LatLng paris = new LatLng(48.8584,2.2945);
-    final LatLng saintlouis = new LatLng(38.627003,-90.199404);
+    final LatLng saintlouis = new LatLng(38.624422,-90.183932);
     final LatLng la = new LatLng(34.0522,-118.2437);
     final LatLng miami = new LatLng(25.7617,-80.1918);
     final LatLng seattle = new LatLng(47.6205,-122.3493);
-
-
 
 
 
@@ -55,6 +53,7 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +70,15 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
                 RadioButton r2 = (RadioButton) findViewById(R.id.radio2);
                 RadioButton r3 = (RadioButton) findViewById(R.id.radio3);
                 RadioButton r4 = (RadioButton) findViewById(R.id.radio4);
+
+
+
                 // if button is clicked, go to main game
                 dialog.show();
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         dialog.dismiss();
 
                         Intent i = new Intent(StreetViewActivity.this, MapActivity.class);
@@ -92,6 +95,10 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
     @Override
     public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
 
+        // sets a random LatLng as the first place we will be going, and sets street view at that place.
+        Random rn = new Random();
+        int answer = rn.nextInt(10);
+
         LatLng test[] = new LatLng[10];
         test[0] = ames;
         test[1] = chicago;
@@ -104,29 +111,27 @@ public class StreetViewActivity extends FragmentActivity implements OnStreetView
         test[8] = saintlouis;
         test[9] = seattle;
 
-       /* List<LatLng> location = new ArrayList<LatLng>();
-        location.add(ames);
-        location.add(chicago);
-        location.add(nyc);
-        location.add(dsm);
-        location.add(london);
-        location.add(paris);
-        location.add(saintlouis);
-        location.add(la);
-        location.add(miami);
-        location.add(seattle);*/
-
-
-        Random rn = new Random();
-        int answer = rn.nextInt(10);
 
         panorama.setPosition(test[answer]);
         StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
         StreetViewPanoramaFragment.newInstance(options);
 
         Log.i("location", Double.toString(answer));
-
     }
 
+    public void switchNames(){
+        String name[] = new String[10];
+        name[0] = "Ames, IA";
+        name[1] = "Chicago, IL";
+        name[2] = "Des Moines, IA";
+        name[3] = "Los Angles, CA";
+        name[4] = "London, England";
+        name[5] = "Miami, FL";
+        name[6] = "New York, NY";
+        name[7] = "Paris, Italy";
+        name[8] = "Saint Louis, MO";
+        name[9] = "Seattle, WA";
+
+    }
 
 }
