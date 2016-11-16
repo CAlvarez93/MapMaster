@@ -3,7 +3,18 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
+    <string name="ames">Ames, IA</string>
+    <string name="chicago">Chicago, IL</string>
+    <string name="nyc">New York, NY</string>
+    <string name="seattle">Seattle, WA</string>
+    <string name="la">Los Angles, CA</string>
+    <string name="saintlouis">Saint Louis, MO</string>
+    <string name="london">London</string>
+    <string name="paris">Paris</string>
+    <string name="miami">Miami, FL</string>
+    <string name="dsm">Des Moines, IA</string>
+
+
 
 </resources>

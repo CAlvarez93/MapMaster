@@ -13,7 +13,7 @@
             android:id="@+id/radio1"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:text=" Chicago"
+            android:text="@string/chicago"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:checked="false"
@@ -22,7 +22,7 @@
             android:id="@+id/radio2"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:text=" Ames "
+            android:text="@string/ames"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_gravity="center_horizontal" />
@@ -30,7 +30,7 @@
             android:id="@+id/radio3"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:text=" New York "
+            android:text="@string/nyc"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_gravity="center_horizontal" />
@@ -38,7 +38,7 @@
             android:id="@+id/radio4"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:text=" Iowa City "
+            android:text="@string/dsm"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_gravity="center_horizontal" />
