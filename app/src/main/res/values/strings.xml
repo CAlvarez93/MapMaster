@@ -15,6 +15,18 @@
     <string name="miami">Miami, FL</string>
     <string name="dsm">Des Moines, IA</string>
 
+    <!-- Here is the string text for the tutorial-->
+    <string name="intro_tutorial">Introduction</string>
+    <string name="first_para">Through this game, we will be testing your perspectives. How well do you know destination
+    around the world? From London,UK to Ames, IA, USA, you will be tested on both your knowledge of locations as well as
+    your ability to search for clues within a given landscape.</string>
+    <string name="how_play">How To Play</string>
+    <string name="second_para">First, select a game Mode. Then when you begin the game, you will find yourself in a Google
+    Street View in an unknown location. Given your knowledge and the clues in the landscape, you will have to discern where
+    you are. By clicking the button, four possible locations will appear and with your wit, you will need to make a decision.
+    The game will terminate based on the game mode, and then at the very end you will be able to see how you stack up against
+    other players.</string>
+    <string name="end_tutorial">Have Fun and Good Luck!</string>
 
 
 </resources>

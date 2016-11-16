@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 /**
@@ -34,8 +33,10 @@ public class TitleScreen extends Fragment {
         });
 
 
+        //Uncomment for actually presenting... commenting out for the sake of debug time
+
         videoview = (VideoView) v.findViewById(R.id.video);
-        Uri uri = Uri.parse("android.resource://"+mActivity.getPackageName()+"/"+R.raw.map_master);
+        Uri uri = Uri.parse("android.resource://" + mActivity.getPackageName() + "/" + R.raw.map_master);
         videoview.setVideoURI(uri);
         videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

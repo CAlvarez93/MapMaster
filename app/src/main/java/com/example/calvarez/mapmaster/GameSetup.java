@@ -1,5 +1,6 @@
 package com.example.calvarez.mapmaster;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -38,6 +39,20 @@ public class GameSetup extends Fragment {
                 mActivity.toggleScreens(R.layout.main_game);
             }
         });
+
+        final Dialog dialog = new Dialog(mActivity);
+        dialog.setContentView(R.layout.tutorial_popup);
+        dialog.setCancelable(true);
+
+        FloatingActionButton info = (FloatingActionButton) v.findViewById(R.id.info);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
+        //Uncomment for actually presenting... commenting out for the sake of debug time
 
         final VideoView video = (VideoView) v.findViewById(R.id.video);
         Uri uri = Uri.parse("android.resource://"+mActivity.getPackageName()+"/"+R.raw.game_setup_background);
