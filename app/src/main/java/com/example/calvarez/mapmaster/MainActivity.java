@@ -13,6 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -23,6 +28,20 @@ public class MainActivity extends AppCompatActivity
     ResultsPage mResultPage;
 
     boolean switch_widget;
+    int questionNumber;
+
+    public ArrayList<Destinations> destinations;
+
+    final LatLng ames = new LatLng(42.016249,-93.636185);
+    final LatLng chicago = new LatLng(41.8781,-87.6298);
+    final LatLng nyc = new LatLng(40.6892,-74.0445);
+    final LatLng dsm = new LatLng(41.587584,-93.616643);
+    final LatLng london = new LatLng(51.5007,-0.1246);
+    final LatLng paris = new LatLng(48.8584,2.2945);
+    final LatLng saintlouis = new LatLng(38.624422,-90.183932);
+    final LatLng la = new LatLng(34.0522,-118.2437);
+    final LatLng miami = new LatLng(25.7617,-80.1918);
+    final LatLng seattle = new LatLng(47.6205,-122.3493);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +105,9 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.flContent,mTitleScreen);
         fragmentTransaction.commit();
+
+        initDestinations();
+        questionNumber = 0;
     }
 
     public void toggleScreens(int layout){
@@ -124,6 +146,42 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         return false;
+    }
+
+    public int getQuestionNumber(){
+        return questionNumber;
+    }
+
+    /**
+     *
+     * @return
+     *  will return false if there is no next question
+     */
+    public boolean nextQuestion(){
+        if(questionNumber == destinations.size())
+            return false;
+        questionNumber++;
+        return true;
+    }
+
+    public void initDestinations(){
+        destinations = new ArrayList<Destinations>();
+
+        destinations.add(new Destinations(ames,"Ames, IA, USA",1));
+        destinations.add(new Destinations(chicago,"Chicago, IL, USA",2));
+        destinations.add(new Destinations(nyc,"New York City, NY, USA",3));
+        destinations.add(new Destinations(dsm,"Des Moines, IA, USA",4));
+        destinations.add(new Destinations(london,"London, UK",5));
+        destinations.add(new Destinations(paris,"Paris, France",6));
+        destinations.add(new Destinations(saintlouis,"St Louis, MO, USA",7));
+        destinations.add(new Destinations(la,"Los Angeles, CA, USA",8));
+        destinations.add(new Destinations(miami,"Miami, FL, USA",9));
+        destinations.add(new Destinations(seattle,"Seattle, WA, USA",10));
+
+    }
+
+    public void shuffleDestinations(){
+        Collections.shuffle(destinations);
     }
 
     @Override

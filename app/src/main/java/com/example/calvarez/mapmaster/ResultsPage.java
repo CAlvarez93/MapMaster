@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,22 +22,33 @@ import android.widget.EditText;
 public class ResultsPage extends Fragment {
 
     MainActivity mActivity;
-
+    private View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.results_page,container,false);
+        if (v != null) {
+            ViewGroup parent = (ViewGroup) v.getParent();
+            if (parent != null)
+                parent.removeView(v);
+        }
+        try {
+            v = inflater.inflate(R.layout.results_page,container,false);
+        } catch (InflateException e) {
+            /* map is already there, just return view as it is */
+        }
+
+
 
         //floating button that takes us back to the title page
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
 
         //set up dialog pop up
         final Dialog dialog = new Dialog(mActivity);
-        dialog.setContentView(R.layout.popup);
+        dialog.setContentView(R.layout.results_popup);
         Window window = dialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+        dialog.show();
         //set up edit text and button for the dialog pop up
         final EditText edit = (EditText) dialog.findViewById(R.id.edit_name);
         Button button = (Button) dialog.findViewById(R.id.enter_button);
