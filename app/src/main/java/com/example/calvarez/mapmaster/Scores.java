@@ -3,7 +3,7 @@ package com.example.calvarez.mapmaster;
 /**
  * Created by adau on 11/17/2016.
  */
-public class Scores {
+public class Scores{
     private int score;
     private String name;
 
@@ -26,4 +26,5 @@ public class Scores {
     public String getName(){
         return name;
     }
+
 }

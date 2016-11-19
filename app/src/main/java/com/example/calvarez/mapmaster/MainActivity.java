@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
      *  will return false if there is no next question
      */
     public boolean nextQuestion(){
-        if(questionNumber == destinations.size())
+        if(questionNumber == 1) // destinations.size())
             return false;
         questionNumber++;
         return true;

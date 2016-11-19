@@ -131,8 +131,6 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
                     public void onClick(View v) {
 
                         dialog.dismiss();
-
-
                         mActivity.toggleScreens(R.layout.feedback_page);
                     }
                 });
