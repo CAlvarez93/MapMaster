@@ -76,9 +76,9 @@ public class GameSetup extends Fragment {
         mActivity.setSwitch(switch_widget.isChecked());
         if(switch_widget.isChecked()){
             power_minute.setBackgroundColor(Color.argb(0, 255, 255, 0));
-            race_to_ten.setBackgroundColor(Color.argb(25,255, 255, 0));
+            race_to_ten.setBackgroundColor(Color.argb(50,255, 255, 0));
         } else {
-            power_minute.setBackgroundColor(Color.argb(25, 255, 255, 0));
+            power_minute.setBackgroundColor(Color.argb(50, 255, 255, 0));
             race_to_ten.setBackgroundColor(Color.argb(0, 255, 255, 0));
         }
 
@@ -88,9 +88,9 @@ public class GameSetup extends Fragment {
                 mActivity.setSwitch(isChecked);
                 if(isChecked){
                     power_minute.setBackgroundColor(Color.argb(0, 255, 255, 0));
-                    race_to_ten.setBackgroundColor(Color.argb(25,255, 255, 0));
+                    race_to_ten.setBackgroundColor(Color.argb(50,255, 255, 0));
                 } else {
-                    power_minute.setBackgroundColor(Color.argb(25, 255, 255, 0));
+                    power_minute.setBackgroundColor(Color.argb(50, 255, 255, 0));
                     race_to_ten.setBackgroundColor(Color.argb(0, 255, 255, 0));
                 }
             }

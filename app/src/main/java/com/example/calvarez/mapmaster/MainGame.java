@@ -2,29 +2,26 @@ package com.example.calvarez.mapmaster;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.StreetViewPanoramaFragment;
 import com.google.android.gms.maps.StreetViewPanoramaOptions;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,17 +38,6 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
     private boolean isGameTimed;
     private Destinations curDestination;
     ArrayList<Integer> selections = new ArrayList<>();
-
-    final LatLng ames = new LatLng(42.016249,-93.636185);
-    final LatLng chicago = new LatLng(41.8781,-87.6298);
-    final LatLng nyc = new LatLng(40.6892,-74.0445);
-    final LatLng dsm = new LatLng(41.587584,-93.616643);
-    final LatLng london = new LatLng(51.5007,-0.1246);
-    final LatLng paris = new LatLng(48.8584,2.2945);
-    final LatLng saintlouis = new LatLng(38.624422,-90.183932);
-    final LatLng la = new LatLng(34.0522,-118.2437);
-    final LatLng miami = new LatLng(25.7617,-80.1918);
-    final LatLng seattle = new LatLng(47.6205,-122.3493);
 
     @Nullable
     @Override
@@ -71,6 +57,7 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
         isGameTimed = mActivity.isGameTimed();
         if(isGameTimed){
             prepTimedGame();
+            mActivity.startTimedGame(v);
         }else{
             prepNonTimedGame();
         }
@@ -83,11 +70,14 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
             selections.add(i);
         }
         Collections.shuffle(selections);
+
+        //This is just a bug fix... shouldn't be a permanent fix...
         try {
             curDestination = mActivity.destinations.get(mActivity.getQuestionNumber());
         }catch (IndexOutOfBoundsException e){
-            mActivity.toggleScreens(R.layout.results_page);
+            mActivity.restartGame();
         }
+
         Random rn = new Random();
         for(int i = 0;i<4;i++){
             if(selections.get(i) == mActivity.getQuestionNumber())
@@ -113,15 +103,59 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
                 window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 Button button = (Button) dialog.findViewById(R.id.dialogButtonOK);
-                RadioButton r1 = (RadioButton) dialog.findViewById(R.id.radio1);
-                RadioButton r2 = (RadioButton) dialog.findViewById(R.id.radio2);
-                RadioButton r3 = (RadioButton) dialog.findViewById(R.id.radio3);
-                RadioButton r4 = (RadioButton) dialog.findViewById(R.id.radio4);
+                final RadioButton r1 = (RadioButton) dialog.findViewById(R.id.radio1);
+                final RadioButton r2 = (RadioButton) dialog.findViewById(R.id.radio2);
+                final RadioButton r3 = (RadioButton) dialog.findViewById(R.id.radio3);
+                final RadioButton r4 = (RadioButton) dialog.findViewById(R.id.radio4);
 
                 r1.setText(mActivity.destinations.get(choices[0]).getLocationName());
                 r2.setText(mActivity.destinations.get(choices[1]).getLocationName());
                 r3.setText(mActivity.destinations.get(choices[2]).getLocationName());
                 r4.setText(mActivity.destinations.get(choices[3]).getLocationName());
+
+                r1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        r2.setChecked(false);
+                        r3.setChecked(false);
+                        r4.setChecked(false);
+
+                        mActivity.checkGuess(curDestination, mActivity.destinations.get(choices[0]));
+                    }
+                });
+
+                r2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        r1.setChecked(false);
+                        r3.setChecked(false);
+                        r4.setChecked(false);
+
+                        mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[1]));
+                    }
+                });
+
+                r3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        r2.setChecked(false);
+                        r1.setChecked(false);
+                        r4.setChecked(false);
+
+                        mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[2]));
+                    }
+                });
+
+                r4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        r2.setChecked(false);
+                        r3.setChecked(false);
+                        r1.setChecked(false);
+
+                        mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[3]));
+                    }
+                });
 
 
                 // if button is clicked, go to main game
@@ -168,34 +202,14 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
         expendableItem.setVisibility(View.VISIBLE);
         expendableItem.setText("/10");
 
-        updatableInfo.setText(""+(mActivity.getQuestionNumber() + 1));
+        updatableInfo.setText("" + mActivity.getNumCorrect());
     }
 
     @Override
     public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-
-        // sets a random LatLng as the first place we will be going, and sets street view at that place.
-        Random rn = new Random();
-        int answer = rn.nextInt(10);
-
-        LatLng test[] = new LatLng[10];
-        test[0] = ames;
-        test[1] = chicago;
-        test[2] = dsm;
-        test[3] = la;
-        test[4] = london;
-        test[5] = miami;
-        test[6] = nyc;
-        test[7] = paris;
-        test[8] = saintlouis;
-        test[9] = seattle;
-
-
         panorama.setPosition(curDestination.getLatLng());
         StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
         StreetViewPanoramaFragment.newInstance(options);
-
-        Log.i("location", Double.toString(answer));
     }
 
 

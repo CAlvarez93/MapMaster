@@ -1,7 +1,7 @@
 package com.example.calvarez.mapmaster;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,7 +47,9 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
             /* map is already there, just return view as it is */
         }
 
-
+        if(mActivity.isGameTimed()) {
+            mActivity.stopTimer();
+        }
 
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -54,6 +57,16 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
         curDestination = mActivity.destinations.get(mActivity.getQuestionNumber());
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        TextView feedback = (TextView) v.findViewById(R.id.feedback);
+
+        if(mActivity.getGuessResult()){
+            mActivity.incrementCorrectAnswer();
+            feedback.setText("Correct");
+            feedback.setTextColor(Color.GREEN);
+        }else{
+            feedback.setText("Incorrect");
+            feedback.setTextColor(Color.RED);
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
