@@ -18,11 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Created by calvarez on 11/5/2016.
  */
@@ -73,7 +68,7 @@ public class ResultsPage extends Fragment {
             @Override
             public void onClick(View view) {
                 String player_name = edit.getText().toString();
-                Scores[] scores = dbSorter(0, player_name);
+                Scores[] scores = dbSorter(mActivity.getNumCorrect(), player_name);
                 dialog.dismiss();
 
                 t1.setText("Player: "+scores[0].getName()+"               Score: "+scores[0].getScore()+"");

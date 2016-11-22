@@ -75,7 +75,9 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
         try {
             curDestination = mActivity.destinations.get(mActivity.getQuestionNumber());
         }catch (IndexOutOfBoundsException e){
+
             mActivity.restartGame();
+
         }
 
         Random rn = new Random();

@@ -243,10 +243,10 @@ public class MainActivity extends AppCompatActivity
      *  will return false if there is no next question
      */
     public boolean nextQuestion(){
-        if(isGameTimed() && (getNumCorrect() == UNTIMED_QUESTION_LIMIT)) // destinations.size())
+        if(isGameTimed() && (questionNumber >= UNTIMED_QUESTION_LIMIT)) { // destinations.size())
             return false;
+        }
         questionNumber++;
-        questionNumber = questionNumber % destinations.size();
         return true;
     }
 
