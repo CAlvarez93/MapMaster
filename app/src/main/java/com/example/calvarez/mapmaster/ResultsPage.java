@@ -25,7 +25,7 @@ public class ResultsPage extends Fragment {
 
     MainActivity mActivity;
     private View v;
-    final Scores[] scoreList = new Scores[5];
+
 
     @Nullable
     @Override
@@ -61,21 +61,31 @@ public class ResultsPage extends Fragment {
         final TextView t3 = (TextView) v.findViewById(R.id.text3);
         final TextView t4 = (TextView) v.findViewById(R.id.text4);
         final TextView t5 = (TextView) v.findViewById(R.id.text5);
-
+        final TextView t11 = (TextView) v.findViewById(R.id.text11);
+        final TextView t22 = (TextView) v.findViewById(R.id.text22);
+        final TextView t33 = (TextView) v.findViewById(R.id.text33);
+        final TextView t44 = (TextView) v.findViewById(R.id.text44);
+        final TextView t55 = (TextView) v.findViewById(R.id.text55);
 
         dialog.show();
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 String player_name = edit.getText().toString();
-                Scores[] scores = dbSorter(mActivity.getNumCorrect(), player_name);
+                Scores[] scores = dbSorter(mActivity.getNumCorrect(), player_name); // adds the new score to list if it's a high score.
                 dialog.dismiss();
 
-                t1.setText("Player: "+scores[0].getName()+"               Score: "+scores[0].getScore()+"");
-                t2.setText("Player: "+scores[1].getName()+"               Score: "+scores[1].getScore()+"");
-                t3.setText("Player: "+scores[2].getName()+"               Score: "+scores[2].getScore()+"");
-                t4.setText("Player: "+scores[3].getName()+"               Score: "+scores[3].getScore()+"");
-                t5.setText("Player: "+scores[4].getName()+"               Score: "+scores[4].getScore()+"");
+                t1.setText("Player:  "+scores[0].getName()+"");
+                t2.setText("Player:  "+scores[1].getName()+"");
+                t3.setText("Player:  "+scores[2].getName()+"");
+                t4.setText("Player:  "+scores[3].getName()+"");
+                t5.setText("Player:  "+scores[4].getName()+"");
+                t11.setText("Score: "+scores[0].getScore()+"");
+                t22.setText("Score: "+scores[1].getScore()+"");
+                t33.setText("Score: "+scores[2].getScore()+"");
+                t44.setText("Score: "+scores[3].getScore()+"");
+                t55.setText("Score: "+scores[4].getScore()+"");
+
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,52 +110,54 @@ public class ResultsPage extends Fragment {
     }
 
     public Scores[] dbSorter(int score, String name){
-        //DBHandler dbh = new DBHandler(mActivity); // all to call methods in the DB handler class
-        Scores s = new Scores(score, name); // makes the current score and name into a score object
-        //Scores[] scoreList =  dbh.getAllScores();// gets all the current scores from score list*/
-        if(scoreList[0] == null) {
-            Scores s1 = new Scores();
-            s1.setName("null");
-            s1.setScore(0);
+
+        Scores s1 = new Scores(score, name);  // makes the current score and name into a score object
+        s1.setScore(score);
+        s1.setName(name);
+        Scores s = new Scores(0, "null"); // makes a null score to assign to un used objects
+        int k = 4;  // int used for the sorting loop
+        int j = 0;  // int used to search through the scores array to find null objects.
+
+        Scores[] scoreList = mActivity.getScoreList(); // gets score list from main activity
+
+        /**
+         * These if and for loops sort through to find if and where null objects are so
+         * they can replace the first null object with the new one. if All objects are full
+         * it checks to see if the lowest score is lower then the new score. If it is it replaces
+         * them. If not the new score is not added to the leaderboard.
+         * After the new object is added or not the score list is sent through a sorting loop
+         * which sorts in order of descending scores.
+         */
+
+        if(scoreList[0] == null){
             scoreList[0] = s1;
-            scoreList[1] = s1;
-            scoreList[2] = s1;
-            scoreList[3] = s1;
-            scoreList[4] = s1;
-            Log.i("set firt to null thing", "test");
+            for(int i = 1; i<5; i++){
+                scoreList[i] = s;
+            }
+        }else{
+            while(scoreList[j].getName() != "null" && j < 4){
+                j++;
+            }
+            if(scoreList[4].getName() != "null"){
+                if(scoreList[4].getScore() < s1.getScore()){
+                    scoreList[4] = s1;
+                }
+            }else{
+                scoreList[j] = s1;
+            }
         }
 
-        outerloop:
-            for (int i = 0; i < scoreList.length; i++) {
-                if (scoreList[i].getName().equalsIgnoreCase(name)) {
-                    if (scoreList[i].getScore() < score) {
-                        scoreList[i] = s;
-                        break outerloop;
-                    } else {
-                        break outerloop;
-                    }
-                }
-                if(scoreList[i].getName() == "null" ){
-                    scoreList[i] = s;
-                    break outerloop;
-                }
-                if (i == scoreList.length - 1 && scoreList.length - 1 < 5) {
-                    scoreList[i] = s;
-                }
+        while(k > 0 ) {
+            Scores temp;
+            if (scoreList[k - 1].getScore() < scoreList[k].getScore()) {
+                temp = scoreList[k];
+                scoreList[k] = scoreList[k - 1];
+                scoreList[k - 1] = temp;
             }
-
-        //Sorting loop to sort from highest score to lowest
-
-
-            for (int j = 1; j < scoreList.length; j++) {
-                Scores temp;
-                if (scoreList[j].getScore() < scoreList[j - 1].getScore()) {
-                    temp = scoreList[j];
-                    scoreList[j] = scoreList[j - 1];
-                    scoreList[j - 1] = temp;
-                }
-            }
-
+            Log.i("sorted the loop", "test");
+            k--;
+        }
+        mActivity.setScoreList(scoreList); // sets the score list back in main activity
 
        return scoreList;
     }

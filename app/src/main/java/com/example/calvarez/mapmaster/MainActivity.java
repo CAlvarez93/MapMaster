@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity
     long timeTillExpired;
     CountDownTimer timer;
 
+    Scores[] scoreList = new Scores[6];
+
     public ArrayList<Destinations> destinations;
 
     final LatLng ames = new LatLng(42.016249,-93.636185);
@@ -264,6 +266,24 @@ public class MainActivity extends AppCompatActivity
      */
     public int getNumCorrect(){
         return numCorrect;
+    }
+
+    /**
+     * get the current leaderboard scores and names
+     * @return
+     * send it to the results page
+     */
+
+    public Scores[] getScoreList(){
+        return scoreList;
+    }
+
+    /**
+     * set the current leaderboard scores and names
+     * @param s
+     */
+    public void setScoreList(Scores[] s){
+        this.scoreList = s;
     }
 
     /**
