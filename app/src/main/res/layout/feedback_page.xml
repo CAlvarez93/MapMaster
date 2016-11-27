@@ -36,4 +36,15 @@
         android:layout_height="match_parent"
         tools:context="com.example.iceauror.lab10.MapsActivity" />
 
+    <TextView
+        android:id="@+id/feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_box"
+        android:text="Correct"
+        android:textColor="#00FF00"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"/>
+
 </RelativeLayout>
