@@ -24,7 +24,7 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private final static int UNTIMED_QUESTION_LIMIT = 10;
+    public final static int UNTIMED_QUESTION_LIMIT = 10;
 
     TitleScreen mTitleScreen;
     GameSetup mGameSetup;
@@ -227,6 +227,8 @@ public class MainActivity extends AppCompatActivity
         return isCorrect;
     }
 
+    public void resetGuessResult(){isCorrect = false; }
+
     /**
      * Get the current question number... this will help keep track of where the user is in the
      * Arraylist of Destinations to make sure we don't repeat locations until the user has already
@@ -244,13 +246,7 @@ public class MainActivity extends AppCompatActivity
      * @return
      *  will return false if there is no next question
      */
-    public boolean nextQuestion(){
-        if(isGameTimed() && (questionNumber >= UNTIMED_QUESTION_LIMIT)) { // destinations.size())
-            return false;
-        }
-        questionNumber++;
-        return true;
-    }
+    public void nextQuestion(){questionNumber++; }
 
     /**
      * updated the number of correct answers

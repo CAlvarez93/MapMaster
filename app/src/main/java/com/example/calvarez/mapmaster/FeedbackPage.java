@@ -69,11 +69,15 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
             feedback.setTextColor(Color.RED);
         }
 
+        mActivity.resetGuessResult();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mActivity.nextQuestion()) {
-                    Toast.makeText(mActivity, "Next Question!!", Toast.LENGTH_SHORT).show();
+                mActivity.nextQuestion();
+                if(mActivity.getNumCorrect() <= (mActivity.UNTIMED_QUESTION_LIMIT - 1)) {
+                    Toast.makeText(mActivity, "Need "+(mActivity.UNTIMED_QUESTION_LIMIT - mActivity.getNumCorrect())
+                            +" more correct to finish!", Toast.LENGTH_SHORT).show();
                     mActivity.toggleScreens(R.layout.main_game);
                 }
                 else {
