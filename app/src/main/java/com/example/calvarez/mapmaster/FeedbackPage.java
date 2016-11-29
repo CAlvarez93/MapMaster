@@ -75,14 +75,8 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {
                 mActivity.nextQuestion();
-                if(mActivity.getNumCorrect() <= (mActivity.UNTIMED_QUESTION_LIMIT - 1)) {
-                    Toast.makeText(mActivity, "Need "+(mActivity.UNTIMED_QUESTION_LIMIT - mActivity.getNumCorrect())
-                            +" more correct to finish!", Toast.LENGTH_SHORT).show();
-                    mActivity.toggleScreens(R.layout.main_game);
-                }
-                else {
+                if(mActivity.getNumCorrect() > (mActivity.UNTIMED_QUESTION_LIMIT - 1)) {
                     mActivity.toggleScreens(R.layout.results_page);
-                    Toast.makeText(mActivity, "We Done!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
