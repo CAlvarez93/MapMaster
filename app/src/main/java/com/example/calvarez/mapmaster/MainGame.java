@@ -22,6 +22,7 @@ import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.StreetViewPanoramaFragment;
 import com.google.android.gms.maps.StreetViewPanoramaOptions;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -209,7 +210,14 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
 
     @Override
     public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-        panorama.setPosition(curDestination.getLatLng());
+        Random discostick = new Random();
+        double offsetLat = ((double)discostick.nextInt(80) - 40.0)/10000.0;
+        double offsetLong = ((double)discostick.nextInt(80) - 40.0)/10000.0;
+        offsetLat = curDestination.getLatLng().latitude - offsetLat;
+        offsetLong = curDestination.getLatLng().longitude - offsetLong;
+        LatLng ranDestination = new LatLng(offsetLat,offsetLong);
+
+        panorama.setPosition(ranDestination,1000);
         StreetViewPanoramaOptions options = new StreetViewPanoramaOptions();
         StreetViewPanoramaFragment.newInstance(options);
     }
