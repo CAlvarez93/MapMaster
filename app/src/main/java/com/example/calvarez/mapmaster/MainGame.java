@@ -38,7 +38,7 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
     private View v;
     private boolean isGameTimed;
     private Destinations curDestination;
-    ArrayList<Integer> selections = new ArrayList<>();
+    ArrayList<Integer> selections;
 
     @Nullable
     @Override
@@ -66,10 +66,11 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
         if(mActivity.getQuestionNumber() == 0){
             mActivity.shuffleDestinations();
         }
-
+        selections = new ArrayList<>();
         for(int i=0;i<mActivity.destinations.size();i++){
             selections.add(i);
         }
+        selections.remove(mActivity.getQuestionNumber());
         Collections.shuffle(selections);
 
         //This is just a bug fix... shouldn't be a permanent fix...
@@ -83,8 +84,6 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
 
         Random rn = new Random();
         for(int i = 0;i<4;i++){
-            if(selections.get(i) == mActivity.getQuestionNumber())
-                selections.remove(i);
             choices[i]=selections.get(i);
         }
         choices[rn.nextInt(4)] = mActivity.getQuestionNumber();

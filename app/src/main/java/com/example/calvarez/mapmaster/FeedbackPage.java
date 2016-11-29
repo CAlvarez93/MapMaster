@@ -76,7 +76,11 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
             public void onClick(View view) {
                 mActivity.nextQuestion();
                 if(mActivity.getNumCorrect() > (mActivity.UNTIMED_QUESTION_LIMIT - 1)) {
-                    mActivity.toggleScreens(R.layout.results_page);
+                    if(mActivity.isGameTimed()){
+                        mActivity.toggleScreens(R.layout.main_game);
+                    }else {
+                        mActivity.toggleScreens(R.layout.results_page);
+                    }
                 }
                 else{
                     mActivity.toggleScreens(R.layout.main_game);
