@@ -53,6 +53,22 @@ public class MainActivity extends AppCompatActivity
     final LatLng la = new LatLng(34.0522,-118.2437);
     final LatLng miami = new LatLng(25.7617,-80.1918);
     final LatLng seattle = new LatLng(47.6205,-122.3493);
+    final LatLng madrid = new LatLng(40.4168,3.7038);
+    final LatLng bejing = new LatLng(39.9042,116.4074);
+    final LatLng tokyo = new LatLng(35.6895,139.6917);
+    final LatLng rio = new LatLng(22.9068,43.1729);
+    final LatLng sydney = new LatLng(33.8688,151.2093);
+    final LatLng johannesburg = new LatLng(26.2041,28.0473);
+    final LatLng dubai = new LatLng(25.2048,55.2708);
+    final LatLng edinburgh = new LatLng(55.9533,3.1883);
+    final LatLng vancouver = new LatLng(49.2827,-123.1207);
+    final LatLng cairo = new LatLng(30.0444,31.2357);
+    final LatLng shkoder = new LatLng(42.0693,19.5033);
+    final LatLng berlin = new LatLng(52.5200,13.4050);
+    final LatLng rome = new LatLng(41.9028,12.4964);
+    final LatLng mexicocity = new LatLng(41.9028,12.4964);
+    final LatLng amsterdam = new LatLng(52.3702,4.8952);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -292,12 +308,27 @@ public class MainActivity extends AppCompatActivity
         destinations.add(new Destinations(chicago,"Chicago, IL, USA",2));
         destinations.add(new Destinations(nyc,"New York City, NY, USA",3));
         destinations.add(new Destinations(dsm,"Des Moines, IA, USA",4));
-        destinations.add(new Destinations(london,"London, UK",5));
+        destinations.add(new Destinations(london,"London, England",5));
         destinations.add(new Destinations(paris,"Paris, France",6));
         destinations.add(new Destinations(saintlouis,"St Louis, MO, USA",7));
         destinations.add(new Destinations(la,"Los Angeles, CA, USA",8));
         destinations.add(new Destinations(miami,"Miami, FL, USA",9));
         destinations.add(new Destinations(seattle,"Seattle, WA, USA",10));
+        destinations.add(new Destinations(madrid,"Madrid, Spain",11));
+        destinations.add(new Destinations(bejing,"Bejing, China",12));
+        destinations.add(new Destinations(tokyo,"Tokyo, Japan",13));
+        destinations.add(new Destinations(rio,"Rio De Janeiro, Brazil",14));
+        destinations.add(new Destinations(sydney,"Sydney, Australia",15));
+        destinations.add(new Destinations(johannesburg,"Johannesburg, South Africa",16));
+        destinations.add(new Destinations(dubai,"Dubai, UAE",17));
+        destinations.add(new Destinations(edinburgh,"Edinburgh, Scotland",18));
+        destinations.add(new Destinations(vancouver,"Vancouver, BC, Canada",19));
+        destinations.add(new Destinations(cairo,"Cairo, Egypt",20));
+        destinations.add(new Destinations(shkoder,"Shkoder, Albania",21));
+        destinations.add(new Destinations(berlin,"Berlin, Germany",22));
+        destinations.add(new Destinations(rome,"Rome, Italy",23));
+        destinations.add(new Destinations(mexicocity,"Mexico City, Mexico",24));
+        destinations.add(new Destinations(amsterdam,"Amsterdam, Netherlands",25));
 
     }
 
