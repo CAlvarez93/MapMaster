@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
 
     public final static int UNTIMED_QUESTION_LIMIT = 10;
     private final int REFRESH_RATE = 100;
+    private final int POWER_MINUTE_NUM_OF_SEC = 60;
 
     TitleScreen mTitleScreen;
     GameSetup mGameSetup;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity
     final LatLng rome = new LatLng(41.9028,12.4964);
     final LatLng mexicocity = new LatLng(41.9028,-102.4964);
     final LatLng amsterdam = new LatLng(52.3702,4.8952);
+    final LatLng moscow = new LatLng(55.7539,37.6208);
 
 
     @Override
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity
      * This happens once at the start of a new game (happens once per game)
      */
     public void initializeGame(){
-        timeTillExpired = 60 * 1000; //60seconds in milliseconds
+        timeTillExpired = POWER_MINUTE_NUM_OF_SEC * 1000; //60seconds in milliseconds
         numCorrect = 0;
     }
 
@@ -336,6 +338,7 @@ public class MainActivity extends AppCompatActivity
         destinations.add(new Destinations(rome,"Rome, Italy",23));
         destinations.add(new Destinations(mexicocity,"Mexico City, Mexico",24));
         destinations.add(new Destinations(amsterdam,"Amsterdam, Netherlands",25));
+        destinations.add(new Destinations(moscow,"Moscow, Russia",26));
 
     }
 
