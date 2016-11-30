@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by calvarez on 11/5/2016.
@@ -43,7 +44,15 @@ public class ResultsPage extends Fragment {
         }
 
 
-
+        /**
+         * This is only here until we figure out how to have two leaderboards - one for each mode.
+         * For now, I'll just use a Toast thing to check and see how much time has elapsed for the
+         * RaceTo10 mode.
+         */
+        if(!mActivity.isGameTimed()) {
+            long timeElapsed = mActivity.stopUntimedGame();
+            Toast.makeText(mActivity, "Done! You finish in: " + (timeElapsed/1000) + "sec", Toast.LENGTH_SHORT).show();
+        }
 
 
         //floating button that takes us back to the title page

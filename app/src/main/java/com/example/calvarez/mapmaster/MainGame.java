@@ -39,6 +39,7 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
     private boolean isGameTimed;
     private Destinations curDestination;
     ArrayList<Integer> selections;
+    Dialog dialog;
 
     @Nullable
     @Override
@@ -61,6 +62,7 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
             mActivity.startTimedGame(v);
         }else{
             prepNonTimedGame();
+            mActivity.startUntimedGame();
         }
 
         if(mActivity.getQuestionNumber() == 0){
@@ -93,13 +95,14 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
 
+        dialog = new Dialog(mActivity);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 // custom dialog
-                final Dialog dialog = new Dialog(mActivity);
+                dialog = new Dialog(mActivity);
                 dialog.setContentView(R.layout.popup);
                 Window window = dialog.getWindow();
                 window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -179,6 +182,7 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
     @Override
     public void onDestroy() {
         super.onDestroy();
+        dialog.dismiss();
     }
 
     @Override

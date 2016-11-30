@@ -2,6 +2,7 @@ package com.example.calvarez.mapmaster;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,12 +26,14 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     public final static int UNTIMED_QUESTION_LIMIT = 10;
+    private final int REFRESH_RATE = 100;
 
     TitleScreen mTitleScreen;
     GameSetup mGameSetup;
     MainGame mMainGame;
     FeedbackPage mFeedbackPage;
     ResultsPage mResultPage;
+    TextView updatableTimeView;
 
     boolean isCorrect;
     boolean switch_widget;
@@ -38,9 +41,13 @@ public class MainActivity extends AppCompatActivity
     int numCorrect;
     long timeTillExpired;
     CountDownTimer timer;
+    long startTime = 0;
+    long timeEllapsed = 0;
+    boolean resume = false;
 
     Scores[] scoreList = new Scores[6];
 
+    private Handler mHandler = new Handler();
     public ArrayList<Destinations> destinations;
 
     final LatLng ames = new LatLng(42.016249,-93.636185);
@@ -53,20 +60,20 @@ public class MainActivity extends AppCompatActivity
     final LatLng la = new LatLng(34.0522,-118.2437);
     final LatLng miami = new LatLng(25.7617,-80.1918);
     final LatLng seattle = new LatLng(47.6205,-122.3493);
-    final LatLng madrid = new LatLng(40.4168,3.7038);
-    final LatLng bejing = new LatLng(39.9042,116.4074);
+    final LatLng madrid = new LatLng(40.4168,-3.7038);
+    final LatLng hongkong = new LatLng(22.2799,114.1737);
     final LatLng tokyo = new LatLng(35.6895,139.6917);
-    final LatLng rio = new LatLng(22.9068,43.1729);
-    final LatLng sydney = new LatLng(33.8688,151.2093);
-    final LatLng johannesburg = new LatLng(26.2041,28.0473);
+    final LatLng rio = new LatLng(-22.9068,-43.1729);
+    final LatLng sydney = new LatLng(-33.8688,151.2093);
+    final LatLng johannesburg = new LatLng(-26.2041,28.0473);
     final LatLng dubai = new LatLng(25.2048,55.2708);
-    final LatLng edinburgh = new LatLng(55.9533,3.1883);
+    final LatLng edinburgh = new LatLng(55.9533,-3.1883);
     final LatLng vancouver = new LatLng(49.2827,-123.1207);
-    final LatLng cairo = new LatLng(30.0444,31.2357);
+    final LatLng athens = new LatLng(37.9838,23.7275);
     final LatLng shkoder = new LatLng(42.0693,19.5033);
     final LatLng berlin = new LatLng(52.5200,13.4050);
     final LatLng rome = new LatLng(41.9028,12.4964);
-    final LatLng mexicocity = new LatLng(41.9028,12.4964);
+    final LatLng mexicocity = new LatLng(41.9028,-102.4964);
     final LatLng amsterdam = new LatLng(52.3702,4.8952);
 
 
@@ -315,7 +322,7 @@ public class MainActivity extends AppCompatActivity
         destinations.add(new Destinations(miami,"Miami, FL, USA",9));
         destinations.add(new Destinations(seattle,"Seattle, WA, USA",10));
         destinations.add(new Destinations(madrid,"Madrid, Spain",11));
-        destinations.add(new Destinations(bejing,"Bejing, China",12));
+        destinations.add(new Destinations(hongkong,"Hong Kong",12));
         destinations.add(new Destinations(tokyo,"Tokyo, Japan",13));
         destinations.add(new Destinations(rio,"Rio De Janeiro, Brazil",14));
         destinations.add(new Destinations(sydney,"Sydney, Australia",15));
@@ -323,7 +330,7 @@ public class MainActivity extends AppCompatActivity
         destinations.add(new Destinations(dubai,"Dubai, UAE",17));
         destinations.add(new Destinations(edinburgh,"Edinburgh, Scotland",18));
         destinations.add(new Destinations(vancouver,"Vancouver, BC, Canada",19));
-        destinations.add(new Destinations(cairo,"Cairo, Egypt",20));
+        destinations.add(new Destinations(athens,"Athens, Greece",20));
         destinations.add(new Destinations(shkoder,"Shkoder, Albania",21));
         destinations.add(new Destinations(berlin,"Berlin, Germany",22));
         destinations.add(new Destinations(rome,"Rome, Italy",23));
@@ -340,13 +347,43 @@ public class MainActivity extends AppCompatActivity
         Collections.shuffle(destinations);
     }
 
+    public void startUntimedGame(){
+        if(!resume){
+            startTime = System.currentTimeMillis();
+        }
+        mHandler.postDelayed(startChrono,REFRESH_RATE);
+    }
+
+    public void pauseUntimedGame(){
+        resume = true;
+
+        mHandler.removeCallbacks(startChrono);
+    }
+
+    public long stopUntimedGame(){
+        resume = false;
+
+        mHandler.removeCallbacks(startChrono);
+        long temp = timeEllapsed;
+        timeEllapsed = 0;
+        return temp;
+    }
+
+    public Runnable startChrono = new Runnable() {
+        public void run() {
+
+            timeEllapsed = System.currentTimeMillis() - startTime;
+            mHandler.postDelayed(this,REFRESH_RATE);
+        }
+    };
+
     public void startTimedGame(View v){
-        final TextView timerUpdate = (TextView) v.findViewById(R.id.updatableInfo);
+        final TextView updatableTimeView = (TextView) v.findViewById(R.id.updatableInfo);
         timer = new CountDownTimer(timeTillExpired,1000){
             @Override
             public void onTick(long millisUntilFinished) {
                 timeTillExpired = millisUntilFinished;
-                timerUpdate.setText(":" + millisUntilFinished/1000);
+                updatableTimeView.setText(""+millisUntilFinished/1000);
             }
 
             @Override
@@ -359,6 +396,19 @@ public class MainActivity extends AppCompatActivity
     public void stopTimer(){
         timer.cancel();
     }
+
+//    private void updateTimer (long time){
+//
+//        int seconds = (int) (time / 1000) % 60;
+//        int minutes = (int) (time / (1000 * 60)) % 60;
+//
+//        if(seconds < 60){
+//            updatableTimeView.setText(String.format("%02d",seconds));
+//        }
+//        if(minutes < 60 && minutes !=0){
+//            updatableTimeView.setText(minutes+":"+String.format("%02d",seconds));
+//        }
+//    }
 
     /**
      *****************************************

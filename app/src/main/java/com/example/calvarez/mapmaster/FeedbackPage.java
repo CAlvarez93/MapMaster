@@ -50,6 +50,8 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
 
         if(mActivity.isGameTimed()) {
             mActivity.stopTimer();
+        }else{
+            mActivity.pauseUntimedGame();
         }
 
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
