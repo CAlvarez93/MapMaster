@@ -15,6 +15,7 @@ public class DBhandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "database";         // Contacts table name
     private static final String TABLE_SCORES = "scores_table";
 
+    private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";                   // Shops Table Columns names
     private static final String KEY_SCORE = "score";
 
@@ -25,7 +26,7 @@ public class DBhandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_SCORES_TABLE = "CREATE TABLE " + TABLE_SCORES + "("+ KEY_NAME + " TEXT,"+ KEY_SCORE +" INTEGER PRIMARY KEY"+ ")";
+        String CREATE_SCORES_TABLE = "CREATE TABLE " + TABLE_SCORES + "("+ KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+ KEY_NAME + " TEXT,"+ KEY_SCORE +" INTEGER"+ ")";
         db.execSQL(CREATE_SCORES_TABLE);
     }
 
@@ -55,24 +56,50 @@ public class DBhandler extends SQLiteOpenHelper {
         String countQuery = "SELECT * FROM " + TABLE_SCORES;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int j = cursor.getCount();
         cursor.close();
-        return cursor.getCount();
+        return j;
     }
 
     public Scores[] getAllScores(){
-        Scores[] scoreList = new Scores[6];
-        String selQuery = "SELECT * FROM "+TABLE_SCORES;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selQuery, null);
-
+        Scores[] scoreList;
         int i = 0;
-        if(cursor.moveToFirst()){
-            while(cursor.moveToNext() && i < 5){
-                Scores score = new Scores();
-                score.setName(cursor.getString(0));
-                score.setScore(Integer.parseInt(cursor.getString(1)));
+        int j;
 
+        /* determines how big the leaderboard is and if we need to use null values*/
+        if(getScoresCount()< 5){
+            scoreList = new Scores[6];
+            j = 5;
+        }else{
+            scoreList = new Scores[getScoresCount()+1];
+            j = getScoresCount();
+        }
+
+        String selQuery = "SELECT * FROM " + TABLE_SCORES;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selQuery, null);
+        Log.i("Value of i", Integer.toString(i));
+
+        if(cursor.moveToFirst()){
+            do{
+                Scores score = new Scores();
+                score.setName(cursor.getString(1));
+                score.setScore(Integer.parseInt(cursor.getString(2)));
+                Log.i("making null scores", "all score score list");
                 scoreList[i] = score;
+                i++;
+            }while(cursor.moveToNext() && i < j );
+            if (i < j) {
+
+
+                while (i < j) {
+                    Scores score = new Scores();
+                    score.setName("null");
+                    score.setScore(0);
+                    scoreList[i] = score;
+                    Log.i("making null scores", "tests");
+                    i++;
+                }
             }
         }
         return scoreList;
@@ -80,6 +107,9 @@ public class DBhandler extends SQLiteOpenHelper {
 
     public Scores[] sortScores(Scores[] scoreList){
         int k = 4;
+        if(getScoresCount()> 4){
+            k = getScoresCount() -1;
+        }
         while(k > 0 ) {
             Scores temp;
             if (scoreList[k - 1].getScore() < scoreList[k].getScore()) {
@@ -87,6 +117,8 @@ public class DBhandler extends SQLiteOpenHelper {
                 scoreList[k] = scoreList[k - 1];
                 scoreList[k - 1] = temp;
             }
+            Log.i("sorted the loop K", scoreList[k].getName());
+            Log.i("sorted the loop K-1", scoreList[k-1].getName());
             Log.i("sorted the loop", "test");
             k--;
         }

@@ -134,8 +134,9 @@ public class ResultsPage extends Fragment {
        // int j = 0;  // int used to search through the scores array to find null objects.
 
         db.addScore(s1);
-
-        Scores[] scoreList = mActivity.getScoreList(); // gets score list from main activity
+        Scores[] scoreList = db.getAllScores(); // gets score list from main activity
+        scoreList = db.sortScores(scoreList);
+        Log.i("Scores count", Integer.toString(db.getScoresCount()));
 
 
 
