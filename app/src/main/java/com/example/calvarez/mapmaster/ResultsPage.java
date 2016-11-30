@@ -27,6 +27,7 @@ public class ResultsPage extends Fragment {
     private View v;
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class ResultsPage extends Fragment {
 
 
 
+
+
         //floating button that takes us back to the title page
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
 
@@ -56,6 +59,10 @@ public class ResultsPage extends Fragment {
         final EditText edit = (EditText) dialog.findViewById(R.id.edit_name);
         Button button = (Button) dialog.findViewById(R.id.enter_button);
 
+        /**
+         * The first five text views are for the name of the player, the next five display the score of
+         * each player. The text views are in a grid layout.
+         */
         final TextView t1 = (TextView) v.findViewById(R.id.text1);
         final TextView t2 = (TextView) v.findViewById(R.id.text2);
         final TextView t3 = (TextView) v.findViewById(R.id.text3);
@@ -111,25 +118,19 @@ public class ResultsPage extends Fragment {
 
     public Scores[] dbSorter(int score, String name){
 
+        DBhandler db = new DBhandler(mActivity);
         Scores s1 = new Scores(score, name);  // makes the current score and name into a score object
-        s1.setScore(score);
-        s1.setName(name);
         Scores s = new Scores(0, "null"); // makes a null score to assign to un used objects
-        int k = 4;  // int used for the sorting loop
-        int j = 0;  // int used to search through the scores array to find null objects.
+        //int k = 4;  // int used for the sorting loop
+       // int j = 0;  // int used to search through the scores array to find null objects.
+
+        db.addScore(s1);
 
         Scores[] scoreList = mActivity.getScoreList(); // gets score list from main activity
 
-        /**
-         * These if and for loops sort through to find if and where null objects are so
-         * they can replace the first null object with the new one. if All objects are full
-         * it checks to see if the lowest score is lower then the new score. If it is it replaces
-         * them. If not the new score is not added to the leaderboard.
-         * After the new object is added or not the score list is sent through a sorting loop
-         * which sorts in order of descending scores.
-         */
 
-        if(scoreList[0] == null){
+
+       /* if(scoreList[0] == null){
             scoreList[0] = s1;
             for(int i = 1; i<5; i++){
                 scoreList[i] = s;
@@ -158,7 +159,7 @@ public class ResultsPage extends Fragment {
             k--;
         }
         mActivity.setScoreList(scoreList); // sets the score list back in main activity
-
+*/
        return scoreList;
     }
 
