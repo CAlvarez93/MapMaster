@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity
     long timeEllapsed = 0;
     boolean resume = false;
 
-    Scores[] scoreList = new Scores[6];
-
     private Handler mHandler = new Handler();
     public ArrayList<Destinations> destinations;
 
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity
     final LatLng shkoder = new LatLng(42.0693,19.5033);
     final LatLng berlin = new LatLng(52.5200,13.4050);
     final LatLng rome = new LatLng(41.9028,12.4964);
-    final LatLng mexicocity = new LatLng(41.9028,-102.4964);
+    final LatLng mexicocity = new LatLng(19.42705,-99.1275);
     final LatLng amsterdam = new LatLng(52.3702,4.8952);
     final LatLng moscow = new LatLng(55.7539,37.6208);
 
@@ -287,24 +285,6 @@ public class MainActivity extends AppCompatActivity
      */
     public int getNumCorrect(){
         return numCorrect;
-    }
-
-    /**
-     * get the current leaderboard scores and names
-     * @return
-     * send it to the results page
-     */
-
-    public Scores[] getScoreList(){
-        return scoreList;
-    }
-
-    /**
-     * set the current leaderboard scores and names
-     * @param s
-     */
-    public void setScoreList(Scores[] s){
-        this.scoreList = s;
     }
 
     /**
