@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_box"
-    >
+    android:background="@drawable/dialog_box_blue">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -18,7 +17,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter Your Name For the Leaderboard:"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:textColor="#f4faff" />
+
             <EditText
                 android:id="@+id/edit_name"
                 android:inputType="textPersonName"
@@ -28,7 +29,11 @@
                 android:layout_height="wrap_content"
                 android:hint="Your Name"
                 android:layout_gravity="center_horizontal"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:textColorHint="#b6c1fe"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="#ffffff"
+                android:fontFamily="sans-serif-thin" />
 
             <Button
                 android:layout_marginTop="30dp"
@@ -37,9 +42,15 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Enter"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textSize="20dp"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/dialog_box"
+                android:fontFamily="sans-serif-black" />
+
 
         </LinearLayout>
+
 
 
 </RelativeLayout>

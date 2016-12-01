@@ -25,7 +25,8 @@
             android:layout_row="0"
             android:gravity="center"
             android:layout_columnSpan="2"
-            android:textColor="#f4faff"/>
+            android:textColor="#f4faff"
+            android:fontFamily="sans-serif-black" />
 
         <TextView
             android:id="@+id/text1"
