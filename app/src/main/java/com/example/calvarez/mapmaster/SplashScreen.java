@@ -2,14 +2,22 @@ package com.example.calvarez.mapmaster;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by calvarez on 12/1/2016.
@@ -25,8 +33,15 @@ public class SplashScreen extends AppCompatActivity {
 
         setContentView(R.layout.splash_activity);
 
+        final ImageView splash = (ImageView) findViewById(R.id.app_icon);
+        RelativeLayout root = (RelativeLayout) findViewById(R.id.relative_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final TextView loading = (TextView) findViewById(R.id.loading);
+
         setSupportActionBar(toolbar);
+
+
+
 
         RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         anim.setInterpolator(new LinearInterpolator());
@@ -34,18 +49,22 @@ public class SplashScreen extends AppCompatActivity {
         anim.setDuration(SPLASH_TIME_OUT);
 
         // Start animating the image
-        final ImageView splash = (ImageView) findViewById(R.id.app_icon);
+
         splash.startAnimation(anim);
 
-        new Handler().postDelayed(new Runnable() {
+        new CountDownTimer(SPLASH_TIME_OUT,100){
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int millis = (int)millisUntilFinished;
+                if(millis%500 <= 100){
+                    loading.append(".");
+                }
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
+
+            }
 
             @Override
-            public void run() {
+            public void onFinish() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 splash.setAnimation(null);
@@ -55,6 +74,7 @@ public class SplashScreen extends AppCompatActivity {
                 // close this activity
                 finish();
             }
-        }, SPLASH_TIME_OUT);
+        }.start();
+
     }
 }
