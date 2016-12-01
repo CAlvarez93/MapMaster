@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
@@ -108,60 +109,37 @@ public class MainGame extends Fragment implements OnStreetViewPanoramaReadyCallb
                 window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 Button button = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                RadioGroup group = (RadioGroup) dialog.findViewById(R.id.radio_group);
+
                 final RadioButton r1 = (RadioButton) dialog.findViewById(R.id.radio1);
                 final RadioButton r2 = (RadioButton) dialog.findViewById(R.id.radio2);
                 final RadioButton r3 = (RadioButton) dialog.findViewById(R.id.radio3);
                 final RadioButton r4 = (RadioButton) dialog.findViewById(R.id.radio4);
 
+                group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        switch (i){
+                            case R.id.radio1:
+                                mActivity.checkGuess(curDestination, mActivity.destinations.get(choices[0]));
+                                break;
+                            case R.id.radio2:
+                                mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[1]));
+                                break;
+                            case R.id.radio3:
+                                mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[2]));
+                                break;
+                            case R.id.radio4:
+                                mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[3]));
+                                break;
+                        }
+                    }
+                });
+
                 r1.setText(mActivity.destinations.get(choices[0]).getLocationName());
                 r2.setText(mActivity.destinations.get(choices[1]).getLocationName());
                 r3.setText(mActivity.destinations.get(choices[2]).getLocationName());
                 r4.setText(mActivity.destinations.get(choices[3]).getLocationName());
-
-                r1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        r2.setChecked(false);
-                        r3.setChecked(false);
-                        r4.setChecked(false);
-
-                        mActivity.checkGuess(curDestination, mActivity.destinations.get(choices[0]));
-                    }
-                });
-
-                r2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        r1.setChecked(false);
-                        r3.setChecked(false);
-                        r4.setChecked(false);
-
-                        mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[1]));
-                    }
-                });
-
-                r3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        r2.setChecked(false);
-                        r1.setChecked(false);
-                        r4.setChecked(false);
-
-                        mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[2]));
-                    }
-                });
-
-                r4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        r2.setChecked(false);
-                        r3.setChecked(false);
-                        r1.setChecked(false);
-
-                        mActivity.checkGuess(curDestination,mActivity.destinations.get(choices[3]));
-                    }
-                });
-
 
                 // if button is clicked, go to main game
                 dialog.show();
