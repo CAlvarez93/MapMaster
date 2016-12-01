@@ -25,7 +25,7 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    public final static int UNTIMED_QUESTION_LIMIT = 1;
+    public final static int UNTIMED_QUESTION_LIMIT = 10;
     private final int REFRESH_RATE = 100;
     private final int POWER_MINUTE_NUM_OF_SEC = 60;
 
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     long startTime = 0;
     long timeEllapsed = 0;
     boolean resume = false;
+    int previewLeaderboard;
 
     private Handler mHandler = new Handler();
     public ArrayList<Destinations> destinations;
@@ -143,6 +144,7 @@ public class MainActivity extends AppCompatActivity
         initDestinations();
         restartGame();
         initializeGame();
+        previewLeaderboard = 0;
     }
 
     /**
@@ -407,6 +409,13 @@ public class MainActivity extends AppCompatActivity
         timer.cancel();
     }
 
+    public void setPreviewLeaderboard(int inPreviewType){
+        previewLeaderboard = inPreviewType;
+    }
+    public int getPreviewLeaderboard(){
+        return previewLeaderboard;
+    }
+
     /**
      *****************************************
      **** End of Game-Functioning Methods ****
@@ -458,6 +467,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.edit_game:
                 toggleScreens(R.layout.game_setup);
+                break;
+            case R.id.powerminute_leaderboard:
+                setPreviewLeaderboard(1);
+                toggleScreens(R.layout.results_page);
+                break;
+            case R.id.racetoten_leaderboard:
+                setPreviewLeaderboard(2);
+                toggleScreens(R.layout.results_page);
                 break;
 
         }

@@ -25,8 +25,20 @@ import android.widget.Toast;
 public class ResultsPage extends Fragment {
 
     MainActivity mActivity;
+    DBhandler db;
     private View v;
 
+    TextView title;
+    TextView t1;
+    TextView t2;
+    TextView t3;
+    TextView t4;
+    TextView t5;
+    TextView t11;
+    TextView t22;
+    TextView t33;
+    TextView t44;
+    TextView t55;
 
 
     @Nullable
@@ -43,18 +55,19 @@ public class ResultsPage extends Fragment {
             /* map is already there, just return view as it is */
         }
 
+        db = new DBhandler(mActivity);
 
-        /**
-         * This is only here until we figure out how to have two leaderboards - one for each mode.
-         * For now, I'll just use a Toast thing to check and see how much time has elapsed for the
-         * RaceTo10 mode.
-         */
-       /* if(!mActivity.isGameTimed()) {
-            final long timeElapsed = mActivity.stopUntimedGame();
-            Toast.makeText(mActivity, "Done! You finish in: " + (timeElapsed / 1000) + "sec", Toast.LENGTH_SHORT).show();
-        }*/
-
-
+        title = (TextView) v.findViewById(R.id.title);
+        t1 = (TextView) v.findViewById(R.id.text1);
+        t2 = (TextView) v.findViewById(R.id.text2);
+        t3 = (TextView) v.findViewById(R.id.text3);
+        t4 = (TextView) v.findViewById(R.id.text4);
+        t5 = (TextView) v.findViewById(R.id.text5);
+        t11 = (TextView) v.findViewById(R.id.text11);
+        t22 = (TextView) v.findViewById(R.id.text22);
+        t33 = (TextView) v.findViewById(R.id.text33);
+        t44 = (TextView) v.findViewById(R.id.text44);
+        t55 = (TextView) v.findViewById(R.id.text55);
 
         //floating button that takes us back to the title page
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
@@ -64,7 +77,6 @@ public class ResultsPage extends Fragment {
         dialog.setContentView(R.layout.results_popup);
         Window window = dialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
         //set up edit text and button for the dialog pop up
         final EditText edit = (EditText) dialog.findViewById(R.id.edit_name);
         Button button = (Button) dialog.findViewById(R.id.enter_button);
@@ -74,19 +86,21 @@ public class ResultsPage extends Fragment {
          * each player. The text views are in a grid layout.
          */
         final long timeElapsed = mActivity.stopUntimedGame();
-        final TextView title = (TextView) v.findViewById(R.id.title);
-        final TextView t1 = (TextView) v.findViewById(R.id.text1);
-        final TextView t2 = (TextView) v.findViewById(R.id.text2);
-        final TextView t3 = (TextView) v.findViewById(R.id.text3);
-        final TextView t4 = (TextView) v.findViewById(R.id.text4);
-        final TextView t5 = (TextView) v.findViewById(R.id.text5);
-        final TextView t11 = (TextView) v.findViewById(R.id.text11);
-        final TextView t22 = (TextView) v.findViewById(R.id.text22);
-        final TextView t33 = (TextView) v.findViewById(R.id.text33);
-        final TextView t44 = (TextView) v.findViewById(R.id.text44);
-        final TextView t55 = (TextView) v.findViewById(R.id.text55);
+        int temp = mActivity.getPreviewLeaderboard();
+        switch (temp){
+            case 0:
+                dialog.show();
+                break;
+            case 1:
+                inflateTimedLeaderboard(db.sortScores(db.getAllScores()));
+                mActivity.setPreviewLeaderboard(0);
+                break;
+            case 2:
+                inflateUntimedLeaderboard(db.sortScores2(db.getAllScores2()));
+                mActivity.setPreviewLeaderboard(0);
+                break;
+        }
 
-        dialog.show();
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -98,17 +112,7 @@ public class ResultsPage extends Fragment {
                      * use those values to populate the results page.
                      */
                     Scores[] scores = dbSorter(mActivity.getNumCorrect(), player_name); // adds the new score to list if it's a high score.
-                    title.setText(" Top Five Power Minuet Scores!");
-                    t1.setText("Player:  "+scores[0].getName()+"");
-                    t2.setText("Player:  "+scores[1].getName()+"");
-                    t3.setText("Player:  "+scores[2].getName()+"");
-                    t4.setText("Player:  "+scores[3].getName()+"");
-                    t5.setText("Player:  "+scores[4].getName()+"");
-                    t11.setText("Score: "+scores[0].getScore()+"");
-                    t22.setText("Score: "+scores[1].getScore()+"");
-                    t33.setText("Score: "+scores[2].getScore()+"");
-                    t44.setText("Score: "+scores[3].getScore()+"");
-                    t55.setText("Score: "+scores[4].getScore()+"");
+                    inflateTimedLeaderboard(scores);
                 }else{
 
                     /**
@@ -117,17 +121,7 @@ public class ResultsPage extends Fragment {
                      */
                     Log.i("timeElapsed long", Long.toString(timeElapsed));
                     Scores[] scores = dbSorter2((int) (timeElapsed/1000), player_name);
-                    title.setText(" Top Five Race to 10 Times!");
-                    t1.setText("Player:  "+scores[0].getName()+"");
-                    t2.setText("Player:  "+scores[1].getName()+"");
-                    t3.setText("Player:  "+scores[2].getName()+"");
-                    t4.setText("Player:  "+scores[3].getName()+"");
-                    t5.setText("Player:  "+scores[4].getName()+"");
-                    t11.setText("Score: "+scores[0].getScore()+" sec");
-                    t22.setText("Score: "+scores[1].getScore()+" sec");
-                    t33.setText("Score: "+scores[2].getScore()+" sec");
-                    t44.setText("Score: "+scores[3].getScore()+" sec");
-                    t55.setText("Score: "+scores[4].getScore()+" sec");
+                    inflateUntimedLeaderboard(scores);
                 }
                 dialog.dismiss();
 
@@ -154,6 +148,34 @@ public class ResultsPage extends Fragment {
         mActivity = (MainActivity) context;
     }
 
+    public void inflateTimedLeaderboard(Scores[] scores){
+        title.setText(" Top Five Power Minuet Scores!");
+        t1.setText("Player:  "+scores[0].getName()+"");
+        t2.setText("Player:  "+scores[1].getName()+"");
+        t3.setText("Player:  "+scores[2].getName()+"");
+        t4.setText("Player:  "+scores[3].getName()+"");
+        t5.setText("Player:  "+scores[4].getName()+"");
+        t11.setText("Score: "+scores[0].getScore()+"");
+        t22.setText("Score: "+scores[1].getScore()+"");
+        t33.setText("Score: "+scores[2].getScore()+"");
+        t44.setText("Score: "+scores[3].getScore()+"");
+        t55.setText("Score: "+scores[4].getScore()+"");
+    }
+
+    public void inflateUntimedLeaderboard(Scores[] scores){
+        title.setText(" Top Five Race to 10 Times!");
+        t1.setText("Player:  "+scores[0].getName()+"");
+        t2.setText("Player:  "+scores[1].getName()+"");
+        t3.setText("Player:  "+scores[2].getName()+"");
+        t4.setText("Player:  "+scores[3].getName()+"");
+        t5.setText("Player:  "+scores[4].getName()+"");
+        t11.setText("Score: "+scores[0].getScore()+" sec");
+        t22.setText("Score: "+scores[1].getScore()+" sec");
+        t33.setText("Score: "+scores[2].getScore()+" sec");
+        t44.setText("Score: "+scores[3].getScore()+" sec");
+        t55.setText("Score: "+scores[4].getScore()+" sec");
+    }
+
     /**
      * dbSorter adds the score of the last game to the database and then retrives all
      * of the scores in the database from getAllScores(). Then it sends all those to be sorted
@@ -164,7 +186,7 @@ public class ResultsPage extends Fragment {
      */
     public Scores[] dbSorter(int score, String name){
 
-        DBhandler db = new DBhandler(mActivity);
+
         Scores s1 = new Scores(score, name);  // makes the current score and name into a score object
 
         db.addScore(s1);
