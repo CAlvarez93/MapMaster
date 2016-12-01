@@ -13,10 +13,11 @@
         android:columnCount="2">
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Top 5 Scores!"
-            android:textSize="35dp"
+            android:textSize="45dp"
             android:padding="15dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -26,11 +27,11 @@
 
         <TextView
             android:id="@+id/text1"
-            android:layout_width="250dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:text="Player: "
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="1"
             android:layout_column="0"
@@ -38,11 +39,11 @@
 
         <TextView
             android:id="@+id/text2"
-            android:layout_width="250dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:text="Player: "
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="2"
             android:layout_column="0"
@@ -50,11 +51,11 @@
 
         <TextView
             android:id="@+id/text3"
-            android:layout_width="250dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:text="Player: "
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="3"
             android:layout_column="0"
@@ -62,11 +63,11 @@
 
         <TextView
             android:id="@+id/text4"
-            android:layout_width="250dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:text="Player: "
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="4"
             android:layout_column="0"
@@ -74,22 +75,22 @@
 
         <TextView
             android:id="@+id/text5"
-            android:layout_width="250dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Player: "
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="5"
             android:layout_column="0"
             android:gravity="left"/>
         <TextView
             android:id="@+id/text11"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Score: 0"
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="1"
             android:layout_column="1"
@@ -97,11 +98,11 @@
 
         <TextView
             android:id="@+id/text22"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Score: 0"
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="2"
             android:layout_column="1"
@@ -109,11 +110,11 @@
 
         <TextView
             android:id="@+id/text33"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Score: 0"
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="3"
             android:layout_column="1"
@@ -121,11 +122,11 @@
 
         <TextView
             android:id="@+id/text44"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Score: 0"
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="4"
             android:layout_column="1"
@@ -133,11 +134,11 @@
 
         <TextView
             android:id="@+id/text55"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Score: 0"
             android:layout_centerInParent="true"
-            android:textSize="20dp"
+            android:textSize="30dp"
             android:padding="15dp"
             android:layout_row="5"
             android:layout_column="1"

@@ -49,10 +49,11 @@ public class ResultsPage extends Fragment {
          * For now, I'll just use a Toast thing to check and see how much time has elapsed for the
          * RaceTo10 mode.
          */
-        if(!mActivity.isGameTimed()) {
-            long timeElapsed = mActivity.stopUntimedGame();
-            Toast.makeText(mActivity, "Done! You finish in: " + (timeElapsed/1000) + "sec", Toast.LENGTH_SHORT).show();
-        }
+       /* if(!mActivity.isGameTimed()) {
+            final long timeElapsed = mActivity.stopUntimedGame();
+            Toast.makeText(mActivity, "Done! You finish in: " + (timeElapsed / 1000) + "sec", Toast.LENGTH_SHORT).show();
+        }*/
+
 
 
         //floating button that takes us back to the title page
@@ -72,6 +73,8 @@ public class ResultsPage extends Fragment {
          * The first five text views are for the name of the player, the next five display the score of
          * each player. The text views are in a grid layout.
          */
+        final long timeElapsed = mActivity.stopUntimedGame();
+        final TextView title = (TextView) v.findViewById(R.id.title);
         final TextView t1 = (TextView) v.findViewById(R.id.text1);
         final TextView t2 = (TextView) v.findViewById(R.id.text2);
         final TextView t3 = (TextView) v.findViewById(R.id.text3);
@@ -89,7 +92,13 @@ public class ResultsPage extends Fragment {
             public void onClick(View view) {
                 String player_name = edit.getText().toString();
                 if(mActivity.isGameTimed()) {
+
+                    /**
+                     * if it is a timed game then it will go to dbSorter and create a scores array there, then
+                     * use those values to populate the results page.
+                     */
                     Scores[] scores = dbSorter(mActivity.getNumCorrect(), player_name); // adds the new score to list if it's a high score.
+                    title.setText(" Top Five Power Minuet Scores!");
                     t1.setText("Player:  "+scores[0].getName()+"");
                     t2.setText("Player:  "+scores[1].getName()+"");
                     t3.setText("Player:  "+scores[2].getName()+"");
@@ -101,18 +110,24 @@ public class ResultsPage extends Fragment {
                     t44.setText("Score: "+scores[3].getScore()+"");
                     t55.setText("Score: "+scores[4].getScore()+"");
                 }else{
-                    long timeElapsed = mActivity.stopUntimedGame();
-                    Scores[] scores = dbSorter2((int) timeElapsed, player_name);
+
+                    /**
+                     * if it is a power 10 game then it will go to dbSorter2 and create a scores array there, then
+                     * use those values to populate the results page.
+                     */
+                    Log.i("timeElapsed long", Long.toString(timeElapsed));
+                    Scores[] scores = dbSorter2((int) (timeElapsed/1000), player_name);
+                    title.setText(" Top Five Race to 10 Times!");
                     t1.setText("Player:  "+scores[0].getName()+"");
                     t2.setText("Player:  "+scores[1].getName()+"");
                     t3.setText("Player:  "+scores[2].getName()+"");
                     t4.setText("Player:  "+scores[3].getName()+"");
                     t5.setText("Player:  "+scores[4].getName()+"");
-                    t11.setText("Score: "+scores[0].getScore()+"");
-                    t22.setText("Score: "+scores[1].getScore()+"");
-                    t33.setText("Score: "+scores[2].getScore()+"");
-                    t44.setText("Score: "+scores[3].getScore()+"");
-                    t55.setText("Score: "+scores[4].getScore()+"");
+                    t11.setText("Score: "+scores[0].getScore()+" sec");
+                    t22.setText("Score: "+scores[1].getScore()+" sec");
+                    t33.setText("Score: "+scores[2].getScore()+" sec");
+                    t44.setText("Score: "+scores[3].getScore()+" sec");
+                    t55.setText("Score: "+scores[4].getScore()+" sec");
                 }
                 dialog.dismiss();
 
@@ -139,6 +154,14 @@ public class ResultsPage extends Fragment {
         mActivity = (MainActivity) context;
     }
 
+    /**
+     * dbSorter adds the score of the last game to the database and then retrives all
+     * of the scores in the database from getAllScores(). Then it sends all those to be sorted
+     * in sortScores() then returns the sorted array back to be displayed.
+     * @param score
+     * @param name
+     * @return
+     */
     public Scores[] dbSorter(int score, String name){
 
         DBhandler db = new DBhandler(mActivity);
@@ -152,6 +175,14 @@ public class ResultsPage extends Fragment {
        return scoreList;
     }
 
+    /**
+     * dbSorter2 adds the time of the last game to the database and then retrives all
+     * of the scores in the database from getAllScores2(). Then it sends all those to be sorted
+     * in sortScores2() then returns the sorted array back to be displayed.
+     * @param time
+     * @param name
+     * @return
+     */
     public Scores[] dbSorter2(int time, String name){
         DBhandler db = new DBhandler(mActivity);
         Scores s2 = new Scores(time, name);  // makes the current score and name into a score object

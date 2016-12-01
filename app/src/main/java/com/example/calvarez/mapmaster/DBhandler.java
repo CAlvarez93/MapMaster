@@ -281,11 +281,13 @@ public class DBhandler extends SQLiteOpenHelper {
 
         for(int i = 0; i < k; i++){
             for(int j = 1; j < (k - i); j++){
-                if(scoreList[j-1].getScore() < scoreList[j].getScore()){
+                if(scoreList[j-1].getScore() > scoreList[j].getScore()){
                     Log.i("sorted the loop", scoreList[j].getName());
-                    temp = scoreList[j-1];
-                    scoreList[j-1] = scoreList[j];
-                    scoreList[j] = temp;
+                    if(scoreList[j].getScore() != 0) {
+                        temp = scoreList[j - 1];
+                        scoreList[j - 1] = scoreList[j];
+                        scoreList[j] = temp;
+                    }
                 }
             }
         }
