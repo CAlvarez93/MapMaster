@@ -20,9 +20,9 @@
     around the world? From London,UK to Ames, IA, USA, you will be tested on both your knowledge of locations as well as
     your ability to search for clues within a given landscape.</string>
     <string name="how_play">How To Play</string>
-    <string name="second_para">First, select weather you want to have a timed game, or an untimed game out of ten. When you begin the game, you will find yourself in a Google
-    Street View in an unknown location. Given your knowledge and the clues in the landscape, you will have to discern where
-    you are. By clicking the next button, four possible locations will appear and with your wit, you will need to make a decision.
+    <string name="second_para">First, select whether you want to have a timed game or an untimed game. When you begin the game, you will find yourself in a Google
+    Street View in an unknown location. Using your knowledge and the clues in the landscape, you will have to discern where
+    you are. When you click the button in the corner, four possible locations will appear and you will need to select the correct location.
     The game will terminate based on the game mode, and then at the very end you will be able to see how you stack up against
     other players.</string>
     <string name="end_tutorial">Have Fun and Good Luck!</string>
