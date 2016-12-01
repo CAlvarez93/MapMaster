@@ -50,6 +50,8 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
 
         if(mActivity.isGameTimed()) {
             mActivity.stopTimer();
+        }else{
+            mActivity.pauseUntimedGame();
         }
 
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
@@ -69,16 +71,21 @@ public class FeedbackPage extends Fragment implements OnMapReadyCallback {
             feedback.setTextColor(Color.RED);
         }
 
+        mActivity.resetGuessResult();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mActivity.nextQuestion()) {
-                    Toast.makeText(mActivity, "Next Question!!", Toast.LENGTH_SHORT).show();
-                    mActivity.toggleScreens(R.layout.main_game);
+                mActivity.nextQuestion();
+                if(mActivity.getNumCorrect() > (mActivity.UNTIMED_QUESTION_LIMIT - 1)) {
+                    if(mActivity.isGameTimed()){
+                        mActivity.toggleScreens(R.layout.main_game);
+                    }else {
+                        mActivity.toggleScreens(R.layout.results_page);
+                    }
                 }
-                else {
-                    mActivity.toggleScreens(R.layout.results_page);
-                    Toast.makeText(mActivity, "We Done!", Toast.LENGTH_SHORT).show();
+                else{
+                    mActivity.toggleScreens(R.layout.main_game);
                 }
             }
         });

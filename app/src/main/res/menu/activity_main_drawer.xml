@@ -7,22 +7,20 @@
             android:icon="@drawable/ic_action_baggage"
             android:title="Title Sequence" />
         <item
-            android:id="@+id/edit_game"
-            android:icon="@drawable/ic_action_edit"
-            android:title="Edit Game" />
-    </group>
+        android:id="@+id/edit_game"
+        android:icon="@drawable/ic_action_edit"
+        android:title="Edit Game" />
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/powerminute_leaderboard"
+            android:icon="@drawable/ic_av_timer_black_24dp"
+            android:title="PowerMinute\nLeaderboard" />
+
+        <item
+            android:id="@+id/racetoten_leaderboard"
+            android:icon="@drawable/ic_poll_black_24dp"
+            android:title="RaceTo10\nLeaderboard" />
+
+    </group>
 
 </menu>

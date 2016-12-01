@@ -2,6 +2,7 @@ package com.example.calvarez.mapmaster;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,13 +25,16 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private final static int UNTIMED_QUESTION_LIMIT = 10;
+    public final static int UNTIMED_QUESTION_LIMIT = 10;
+    private final int REFRESH_RATE = 100;
+    private final int POWER_MINUTE_NUM_OF_SEC = 60;
 
     TitleScreen mTitleScreen;
     GameSetup mGameSetup;
     MainGame mMainGame;
     FeedbackPage mFeedbackPage;
     ResultsPage mResultPage;
+    TextView updatableTimeView;
 
     boolean isCorrect;
     boolean switch_widget;
@@ -38,9 +42,12 @@ public class MainActivity extends AppCompatActivity
     int numCorrect;
     long timeTillExpired;
     CountDownTimer timer;
+    long startTime = 0;
+    long timeEllapsed = 0;
+    boolean resume = false;
+    int previewLeaderboard;
 
-    Scores[] scoreList = new Scores[6];
-
+    private Handler mHandler = new Handler();
     public ArrayList<Destinations> destinations;
 
     final LatLng ames = new LatLng(42.016249,-93.636185);
@@ -53,11 +60,30 @@ public class MainActivity extends AppCompatActivity
     final LatLng la = new LatLng(34.0522,-118.2437);
     final LatLng miami = new LatLng(25.7617,-80.1918);
     final LatLng seattle = new LatLng(47.6205,-122.3493);
+    final LatLng madrid = new LatLng(40.4168,-3.7038);
+    final LatLng hongkong = new LatLng(22.2799,114.1737);
+    final LatLng tokyo = new LatLng(35.6895,139.6917);
+    final LatLng rio = new LatLng(-22.9068,-43.1729);
+    final LatLng sydney = new LatLng(-33.8688,151.2093);
+    final LatLng johannesburg = new LatLng(-26.2041,28.0473);
+    final LatLng dubai = new LatLng(25.2048,55.2708);
+    final LatLng edinburgh = new LatLng(55.9533,-3.1883);
+    final LatLng vancouver = new LatLng(49.2827,-123.1207);
+    final LatLng athens = new LatLng(37.9838,23.7275);
+    final LatLng shkoder = new LatLng(42.0693,19.5033);
+    final LatLng berlin = new LatLng(52.5200,13.4050);
+    final LatLng rome = new LatLng(41.9028,12.4964);
+    final LatLng mexicocity = new LatLng(19.42705,-99.1275);
+    final LatLng amsterdam = new LatLng(52.3702,4.8952);
+    final LatLng moscow = new LatLng(55.7539,37.6208);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toast.makeText(MainActivity.this, "Starting", Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -120,6 +146,7 @@ public class MainActivity extends AppCompatActivity
         initDestinations();
         restartGame();
         initializeGame();
+        previewLeaderboard = 0;
     }
 
     /**
@@ -167,7 +194,7 @@ public class MainActivity extends AppCompatActivity
      * This happens once at the start of a new game (happens once per game)
      */
     public void initializeGame(){
-        timeTillExpired = 60 * 1000; //60seconds in milliseconds
+        timeTillExpired = POWER_MINUTE_NUM_OF_SEC * 1000; //60seconds in milliseconds
         numCorrect = 0;
     }
 
@@ -227,6 +254,8 @@ public class MainActivity extends AppCompatActivity
         return isCorrect;
     }
 
+    public void resetGuessResult(){isCorrect = false; }
+
     /**
      * Get the current question number... this will help keep track of where the user is in the
      * Arraylist of Destinations to make sure we don't repeat locations until the user has already
@@ -244,13 +273,7 @@ public class MainActivity extends AppCompatActivity
      * @return
      *  will return false if there is no next question
      */
-    public boolean nextQuestion(){
-        if(isGameTimed() && (questionNumber >= UNTIMED_QUESTION_LIMIT)) { // destinations.size())
-            return false;
-        }
-        questionNumber++;
-        return true;
-    }
+    public void nextQuestion(){questionNumber++; }
 
     /**
      * updated the number of correct answers
@@ -269,24 +292,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * get the current leaderboard scores and names
-     * @return
-     * send it to the results page
-     */
-
-    public Scores[] getScoreList(){
-        return scoreList;
-    }
-
-    /**
-     * set the current leaderboard scores and names
-     * @param s
-     */
-    public void setScoreList(Scores[] s){
-        this.scoreList = s;
-    }
-
-    /**
      * this initializes all the locations and preps the game
      */
     public void initDestinations(){
@@ -296,12 +301,28 @@ public class MainActivity extends AppCompatActivity
         destinations.add(new Destinations(chicago,"Chicago, IL, USA",2));
         destinations.add(new Destinations(nyc,"New York City, NY, USA",3));
         destinations.add(new Destinations(dsm,"Des Moines, IA, USA",4));
-        destinations.add(new Destinations(london,"London, UK",5));
+        destinations.add(new Destinations(london,"London, England",5));
         destinations.add(new Destinations(paris,"Paris, France",6));
         destinations.add(new Destinations(saintlouis,"St Louis, MO, USA",7));
         destinations.add(new Destinations(la,"Los Angeles, CA, USA",8));
         destinations.add(new Destinations(miami,"Miami, FL, USA",9));
         destinations.add(new Destinations(seattle,"Seattle, WA, USA",10));
+        destinations.add(new Destinations(madrid,"Madrid, Spain",11));
+        destinations.add(new Destinations(hongkong,"Hong Kong",12));
+        destinations.add(new Destinations(tokyo,"Tokyo, Japan",13));
+        destinations.add(new Destinations(rio,"Rio De Janeiro, Brazil",14));
+        destinations.add(new Destinations(sydney,"Sydney, Australia",15));
+        destinations.add(new Destinations(johannesburg,"Johannesburg, South Africa",16));
+        destinations.add(new Destinations(dubai,"Dubai, UAE",17));
+        destinations.add(new Destinations(edinburgh,"Edinburgh, Scotland",18));
+        destinations.add(new Destinations(vancouver,"Vancouver, BC, Canada",19));
+        destinations.add(new Destinations(athens,"Athens, Greece",20));
+        destinations.add(new Destinations(shkoder,"Shkoder, Albania",21));
+        destinations.add(new Destinations(berlin,"Berlin, Germany",22));
+        destinations.add(new Destinations(rome,"Rome, Italy",23));
+        destinations.add(new Destinations(mexicocity,"Mexico City, Mexico",24));
+        destinations.add(new Destinations(amsterdam,"Amsterdam, Netherlands",25));
+        destinations.add(new Destinations(moscow,"Moscow, Russia",26));
 
     }
 
@@ -313,13 +334,66 @@ public class MainActivity extends AppCompatActivity
         Collections.shuffle(destinations);
     }
 
+    /**
+     * This will commence the count-up clock for the unTimedMode. I also refer to this "count-up"
+     * clock as a "Chrono" clock.
+     */
+    public void startUntimedGame(){
+        if(!resume){
+            startTime = System.currentTimeMillis();
+        }
+        mHandler.postDelayed(startChrono,REFRESH_RATE);
+    }
+
+    /**
+     * This is used to pause the Chrono when the user enters a feedback page
+     */
+    public void pauseUntimedGame(){
+        resume = true;
+
+        mHandler.removeCallbacks(startChrono);
+    }
+
+    /**
+     * This is used in the results page to stop the Chrono. When the Chrono stops, this method also
+     * returns the amount of time that has elapsed since the start of the Chrono is seconds
+     * @return
+     *  time elapsed in seconds since start of Chrono
+     */
+    public long stopUntimedGame(){
+        resume = false;
+
+        mHandler.removeCallbacks(startChrono);
+        long temp = timeEllapsed;
+        timeEllapsed = 0;
+        return temp;
+    }
+
+    /**
+     * This kicks off the Chrono on a separate thread
+     */
+    private Runnable startChrono = new Runnable() {
+        public void run() {
+
+            timeEllapsed = System.currentTimeMillis() - startTime;
+            mHandler.postDelayed(this,REFRESH_RATE);
+        }
+    };
+
+    /**
+     * This is called when you commence a timed game. There is a constant at the beginning of this
+     * class that defines how long the count down will last. The text view that displays how much
+     * time is remaining to the user is also updated in here.
+     * @param v
+     *  pass the view that contains the TextView with the id 'updatableInfo'
+     */
     public void startTimedGame(View v){
-        final TextView timerUpdate = (TextView) v.findViewById(R.id.updatableInfo);
+        final TextView updatableTimeView = (TextView) v.findViewById(R.id.updatableInfo);
         timer = new CountDownTimer(timeTillExpired,1000){
             @Override
             public void onTick(long millisUntilFinished) {
                 timeTillExpired = millisUntilFinished;
-                timerUpdate.setText(":" + millisUntilFinished/1000);
+                updatableTimeView.setText(""+millisUntilFinished/1000);
             }
 
             @Override
@@ -329,8 +403,29 @@ public class MainActivity extends AppCompatActivity
         }.start();
     }
 
+    /**
+     * This stops the count-down timer when a feedback page is reached. You could also think of this
+     * as the pause command.
+     */
     public void stopTimer(){
         timer.cancel();
+    }
+
+    /**
+     * this will enable a preview of the leaderboard to a specific type of board as well
+     * @param inPreviewType
+     */
+    public void setPreviewLeaderboard(int inPreviewType){
+        previewLeaderboard = inPreviewType;
+    }
+
+    /**
+     * This is what is checked by the results page to differentiate between a preview and the end
+     * of the game.
+     * @return
+     */
+    public int getPreviewLeaderboard(){
+        return previewLeaderboard;
     }
 
     /**
@@ -384,6 +479,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.edit_game:
                 toggleScreens(R.layout.game_setup);
+                break;
+            case R.id.powerminute_leaderboard:
+                setPreviewLeaderboard(1);
+                toggleScreens(R.layout.results_page);
+                break;
+            case R.id.racetoten_leaderboard:
+                setPreviewLeaderboard(2);
+                toggleScreens(R.layout.results_page);
                 break;
 
         }
