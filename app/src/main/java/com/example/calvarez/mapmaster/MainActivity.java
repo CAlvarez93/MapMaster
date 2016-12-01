@@ -409,9 +409,19 @@ public class MainActivity extends AppCompatActivity
         timer.cancel();
     }
 
+    /**
+     * this will enable a preview of the leaderboard to a specific type of board as well
+     * @param inPreviewType
+     */
     public void setPreviewLeaderboard(int inPreviewType){
         previewLeaderboard = inPreviewType;
     }
+
+    /**
+     * This is what is checked by the results page to differentiate between a preview and the end
+     * of the game.
+     * @return
+     */
     public int getPreviewLeaderboard(){
         return previewLeaderboard;
     }
