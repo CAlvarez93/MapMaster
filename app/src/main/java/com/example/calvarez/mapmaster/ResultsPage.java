@@ -149,7 +149,7 @@ public class ResultsPage extends Fragment {
     }
 
     public void inflateTimedLeaderboard(Scores[] scores){
-        title.setText(" Top Five Power Minuet Scores!");
+        title.setText(" Top Five Power Minute Scores!");
         t1.setText("Player:  "+scores[0].getName()+"");
         t2.setText("Player:  "+scores[1].getName()+"");
         t3.setText("Player:  "+scores[2].getName()+"");

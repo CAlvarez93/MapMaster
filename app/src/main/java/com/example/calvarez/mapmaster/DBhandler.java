@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by adau on 11/29/2016.
+ * Created by Adam Dau "The Greatest" on 11/29/2016.
  */
 public class DBhandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;                   // Database version
