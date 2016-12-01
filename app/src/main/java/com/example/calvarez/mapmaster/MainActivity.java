@@ -351,8 +351,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * This
+     * This is used in the results page to stop the Chrono. When the Chrono stops, this method also
+     * returns the amount of time that has elapsed since the start of the Chrono is seconds
      * @return
+     *  time elapsed in seconds since start of Chrono
      */
     public long stopUntimedGame(){
         resume = false;
@@ -363,7 +365,10 @@ public class MainActivity extends AppCompatActivity
         return temp;
     }
 
-    public Runnable startChrono = new Runnable() {
+    /**
+     * This kicks off the Chrono on a separate thread
+     */
+    private Runnable startChrono = new Runnable() {
         public void run() {
 
             timeEllapsed = System.currentTimeMillis() - startTime;
@@ -371,6 +376,13 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * This is called when you commence a timed game. There is a constant at the beginning of this
+     * class that defines how long the count down will last. The text view that displays how much
+     * time is remaining to the user is also updated in here.
+     * @param v
+     *  pass the view that contains the TextView with the id 'updatableInfo'
+     */
     public void startTimedGame(View v){
         final TextView updatableTimeView = (TextView) v.findViewById(R.id.updatableInfo);
         timer = new CountDownTimer(timeTillExpired,1000){
@@ -387,22 +399,13 @@ public class MainActivity extends AppCompatActivity
         }.start();
     }
 
+    /**
+     * This stops the count-down timer when a feedback page is reached. You could also think of this
+     * as the pause command.
+     */
     public void stopTimer(){
         timer.cancel();
     }
-
-//    private void updateTimer (long time){
-//
-//        int seconds = (int) (time / 1000) % 60;
-//        int minutes = (int) (time / (1000 * 60)) % 60;
-//
-//        if(seconds < 60){
-//            updatableTimeView.setText(String.format("%02d",seconds));
-//        }
-//        if(minutes < 60 && minutes !=0){
-//            updatableTimeView.setText(minutes+":"+String.format("%02d",seconds));
-//        }
-//    }
 
     /**
      *****************************************
