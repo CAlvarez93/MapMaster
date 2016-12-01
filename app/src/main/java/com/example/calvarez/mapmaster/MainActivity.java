@@ -25,7 +25,7 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    public final static int UNTIMED_QUESTION_LIMIT = 10;
+    public final static int UNTIMED_QUESTION_LIMIT = 1;
     private final int REFRESH_RATE = 100;
     private final int POWER_MINUTE_NUM_OF_SEC = 60;
 
@@ -330,6 +330,10 @@ public class MainActivity extends AppCompatActivity
         Collections.shuffle(destinations);
     }
 
+    /**
+     * This will commence the count-up clock for the unTimedMode. I also refer to this "count-up"
+     * clock as a "Chrono" clock.
+     */
     public void startUntimedGame(){
         if(!resume){
             startTime = System.currentTimeMillis();
@@ -337,12 +341,19 @@ public class MainActivity extends AppCompatActivity
         mHandler.postDelayed(startChrono,REFRESH_RATE);
     }
 
+    /**
+     * This is used to pause the Chrono when the user enters a feedback page
+     */
     public void pauseUntimedGame(){
         resume = true;
 
         mHandler.removeCallbacks(startChrono);
     }
 
+    /**
+     * This
+     * @return
+     */
     public long stopUntimedGame(){
         resume = false;
 
